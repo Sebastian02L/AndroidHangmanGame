@@ -4,10 +4,32 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'GameScreen.dart';
+
+//Punto de inicio de nuestra aplicacion
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider( //Como utilizamos la libreria Provider, toda la app debe estar envuelta en ella para funcionar correctamente
+      create: (context) => GameManager(),
+      child: MyApp(),
+    ),
+  );
 }
 
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: GameUI(), // PONER AQUI LA PRIMERA PANTALLA QUE DEBE VERSE
+      ),
+    );
+  }
+}
+
+/*
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -362,3 +384,4 @@ class _HistoryListViewState extends State<HistoryListView> {
     );
   }
 }
+*/
