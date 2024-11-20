@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'GameScreen.dart';
+import 'GameSettingsScreen.dart';
+import 'MainMenuScreen.dart';
+import 'RankingScreen.dart';
+import 'ResultsScreen.dart';
 
 //Punto de inicio de nuestra aplicacion
 void main() {
@@ -23,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: GameUI(), // PONER AQUI LA PRIMERA PANTALLA QUE DEBE VERSE
+        body: MenuPrincipal(), // PONER AQUI LA PRIMERA PANTALLA QUE DEBE VERSE
       ),
     );
   }
