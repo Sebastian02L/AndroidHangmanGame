@@ -33,77 +33,107 @@ class MyApp extends StatelessWidget {
   }
 }
 
-//Clase que representa el estado del juego con las variables que necesitamos y gestiona la partida
+//Clase que representa el estado del juego
 class GameState extends ChangeNotifier {
-  //Lista de palabras a adivinar
-  var words = List.of(["Tomate"]);
+  //Lista de palabras a adivinar, teniendo que recibir la lista de la query a la BD
+  var words = List.of(["Tomate", "Casa"]);
 
+  //Variables de la interfaz
   var puntuation = 0;
   var currentRound = 0;
-  var gameMode = 0;
-  var setUp = false;
+  String maxRounds = "";
 
-  var currentWord;
-  var hiddenWord;
+  bool MarathonMode = true;
+
+  //Indica si debe preparar una nueva ronda
+  var setUp = true;
+
+  //Variables de la partida
+  var currentWord;  //Cadena a adivinar
+  var hiddenWord; //Cadena que se muestra en la UI
+
+  //En Flutter las cadenas de tetxo son innmutables, es decir, no podemos acceder a un char y cambiarlo
+  //para ello utilizamos un buffer.
+  StringBuffer buffer = StringBuffer();
 
   ////// METODOS PARA GESTIONAR LA PARTIDA //////
 
-  //
+  //Prepara las rondas del juego
   void SetUpRound() {
-    if(!setUp){
-      currentWord = words[0];
+
+    if(setUp){
+      currentWord = words[0].toLowerCase();
+      words.removeAt(0);
+
       int characters = currentWord.length;
       String word = "";
 
+      //Crea la cadena de tetxo oculta segun el numero de letras
       for (int i = 0; i < characters; i++) {
-        word += "_ ";
+        word += "_";
       }
 
       hiddenWord = word;
-      print(hiddenWord);
-    }
-  }
+      setUp = false;
 
-  //Comprueba si la letra pulsada es correcta
+        if(MarathonMode) {
+          maxRounds = "∞";
+        }
+        else {
+          maxRounds = "10";
+        }
+      }
+
+    }
+
+  //Comprueba si la letra pulsada es correcta o incorrecta
   void IsCharacterCorrect(String char) {
+
     if (currentWord.contains(char)) {
-      print("correcto");
-      //Muestro la letra adivinada
+      //Muestra la letra en la cadena oculta
       SwapLetter(char);
     }
     else {
-      print("mal");
+      //Quitarle una vida al jugador
     }
 
+    //Comprobamos si ha adivinado toda la palabra
+    if(CheckWinCondition()){
+      setUp = true;
+      puntuation += 100;
+      currentRound += 1;
+    }
+
+    //Actualiza el contenido de la UI
     UpdateUI();
   }
 
+  //Se encarga de mostrar las letras correcta en la cadena oculta
   void SwapLetter(String letter){
-    //Recorremos la palabra para guardarnos la posicion de las letras que adivinamos
-    for(int i = 0; i < currentWord.lenght; i++){
+
+    for(int i = 0; i < currentWord.length; i++){
+      //Si coincide la letra pulsada con la letra iterada, escribimos en su posicion la letra pulsada
       if(currentWord[i] == letter){
-        hiddenWord[i] = letter;
+        buffer.write(letter);
+      }
+      //En caso contrario, escribimos lo que ya tiene en esa posicion la cadena oculta
+      else
+      {
+        buffer.write(hiddenWord[i]);
       }
     }
+    hiddenWord = buffer.toString();
+
+    //Limpiamos el buffer de cara al siguiente uso del metodo
+    buffer.clear();
+  }
+
+  //Comprueba si ha adivinado la palabra
+  bool CheckWinCondition(){
+    return hiddenWord == currentWord;
   }
 
   ////// METODOS PARA ACTUALIZAR LA INTERFAZ //////
-
-  void UpdatePuntuation(int points) {
-    puntuation = points;
-    UpdateUI();
-  }
-
-  void UpdateRound() {
-    puntuation += 1;
-    UpdateUI();
-  }
-
-  void UpdateWordBox(String word){
-    hiddenWord = word;
-    UpdateUI();
-  }
-
   void UpdateUI(){
     notifyListeners();
   }

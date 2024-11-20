@@ -25,7 +25,7 @@ class GameUI extends StatelessWidget {
                   children: [
                     Flexible( //Flexible permite que el widget sea responsivo, indicando en flex cuanto tiene que ocupar
                         flex: 2,
-                        child: WordsCounter(counter: appState.currentRound)),
+                        child: WordsCounter(counter: appState.currentRound,totalWords: appState.maxRounds)),
                     Flexible(
                         flex: 2,
                         child: SizedBox(child: Padding(padding: EdgeInsets.all(10)))),
@@ -44,7 +44,7 @@ class GameUI extends StatelessWidget {
                 //Caja donde se intenta adivinar la palabra
                 Flexible(
                     flex : 1,
-                    child: WordBox(as: appState)
+                    child: WordBox()
                 ),
                 Flexible(
                     flex: 1,
@@ -84,8 +84,8 @@ class PuntuationCard extends StatelessWidget{
 class WordsCounter extends StatelessWidget{
 
   final int counter;
-  String? totalWords;
-  WordsCounter({super.key, required this.counter, this.totalWords = "∞"});
+  String totalWords;
+  WordsCounter({super.key, required this.counter, required this.totalWords});
 
   @override
   Widget build(BuildContext context) {
@@ -127,12 +127,11 @@ class GamePlaceHolder extends StatelessWidget {
 
 //Widget para gestionar la palabra a adivinar
 class WordBox extends StatelessWidget{
-  GameState as;
-
-  WordBox({super.key, required this.as});
+  WordBox({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<GameState>();
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 30.0),
         child: Card(
@@ -142,7 +141,7 @@ class WordBox extends StatelessWidget{
                   height: 100,
                   width: 500,
                   child: Center(
-                    child: Text(as.hiddenWord)
+                    child: Text(appState.hiddenWord)
                   )
                 )
         )
@@ -153,11 +152,11 @@ class WordBox extends StatelessWidget{
 //Widget para crear los botones del teclado
 class KeyboardButton extends StatelessWidget{
   final String letter;
-  GameState as;
-  KeyboardButton({super.key, required this.letter, required this.as});
+  KeyboardButton({super.key, required this.letter});
 
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<GameState>();
     return Flexible(
       flex: 1,
       child: Padding(padding: EdgeInsets.all(2),
@@ -165,16 +164,11 @@ class KeyboardButton extends StatelessWidget{
           style: TextButton.styleFrom(
             backgroundColor: Colors.grey
           ),
-          onPressed: (){ as.IsCharacterCorrect(GetLetter()); },
+          onPressed: (){ appState.IsCharacterCorrect(letter.toLowerCase()); },
           child: Center(child: Text(letter)),
         ),
       )
     );
-  }
-
-  //Metodo que se ejecuta al pulsar el boton, el
-  String GetLetter(){
-    return letter;
   }
 }
 
