@@ -40,6 +40,7 @@ class GameState extends ChangeNotifier {
 
   //Variables de la interfaz
   var puntuation = 0;
+  var numErrores = 0;
   var currentRound = 0;
   String maxRounds = "";
 
@@ -94,7 +95,7 @@ class GameState extends ChangeNotifier {
       SwapLetter(char);
     }
     else {
-      //Quitarle una vida al jugador
+      numErrores++;
     }
 
     //Comprobamos si ha adivinado toda la palabra
@@ -131,6 +132,15 @@ class GameState extends ChangeNotifier {
   //Comprueba si ha adivinado la palabra
   bool CheckWinCondition(){
     return hiddenWord == currentWord;
+  }
+
+  Image GetImage(){
+    if(numErrores % 2 == 0) {
+      return Image.asset('assets/Images/Ahorcado.jpg');
+    }
+    else {
+      return Image.asset('assets/Gifs/HungManBackground01.gif');
+    }
   }
 
   ////// METODOS PARA ACTUALIZAR LA INTERFAZ //////

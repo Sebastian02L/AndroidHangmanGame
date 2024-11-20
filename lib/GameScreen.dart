@@ -109,6 +109,8 @@ class GamePlaceHolder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<GameState>();
+
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 5),
         child: AspectRatio(
@@ -117,7 +119,7 @@ class GamePlaceHolder extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5)),
                 child: Center(
-                  child: Text("Imagen"),
+                  child: appState.GetImage()
                 )
             )
         )
