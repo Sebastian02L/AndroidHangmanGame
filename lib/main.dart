@@ -21,15 +21,84 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => GameManager(),
+      create: (context) => GameState(),
       child: MaterialApp(
         title: "Hangman Game",
         theme: ThemeData(
           useMaterial3: true,
         ),
-        home: MenuPrincipal(),
+        home: GameUI(),
       ),
     );
+  }
+}
+
+//Clase que representa el estado del juego con las variables que necesitamos y gestiona la partida
+class GameState extends ChangeNotifier {
+  //Lista de palabras a adivinar
+  var words = List.of(["Tomate"]);
+
+  var puntuation = 0;
+  var currentRound = 0;
+  var gameMode = 0;
+
+  var currentWord;
+  var hiddenWord;
+
+  ////// METODOS PARA GESTIONAR LA PARTIDA //////
+
+  //
+  void SetUpRound() {
+    currentWord = words.removeAt(0);
+    int characters = currentWord.length;
+    String word = "";
+
+    for (int i = 0; i < characters; i++) {
+      word += "_ ";
+    }
+    hiddenWord = word;
+  }
+
+  //Comprueba si la letra pulsada es correcta
+  void IsCharacterCorrect(String char) {
+    if (currentWord.contains(char)) {
+      //Muestro la letra adivinada
+
+      //Actualizo la UI
+    }
+  }
+
+
+  void SwapLetter(String letter){
+    List<int> indexes = [];
+
+    //Recoremos la palabra para guardarnos la posicion de las letras que adivinamos
+    for(int i = 0; i < currentWord.lenght; i++){
+      if(currentWord[i] == letter){
+        indexes.add(i);
+      }
+    }
+
+    for(int i = 0; i < indexes.length; i++){
+
+    }
+  }
+
+  ////// METODOS PARA ACTUALIZAR LA INTERFAZ //////
+
+  void UpdatePuntuation(int points) {
+    puntuation = points;
+    notifyListeners();
+  }
+
+  void UpdateRound() {
+    puntuation += 1;
+    notifyListeners();
+  }
+
+  void UpdateWordBox(String word){
+    hiddenWord = word;
+    notifyListeners();
   }
 }
 
