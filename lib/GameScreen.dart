@@ -9,6 +9,9 @@ class GameUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<GameState>();
+
+   appState.SetUpRound();
+
     return Scaffold(
       body: Container( //Lo encerramos todo en un container para poner un padding superior
         padding: EdgeInsets.only(top: 20.0),
@@ -41,7 +44,7 @@ class GameUI extends StatelessWidget {
                 //Caja donde se intenta adivinar la palabra
                 Flexible(
                     flex : 1,
-                    child: WordBox()
+                    child: WordBox(as: appState)
                 ),
                 Flexible(
                     flex: 1,
@@ -124,7 +127,9 @@ class GamePlaceHolder extends StatelessWidget {
 
 //Widget para gestionar la palabra a adivinar
 class WordBox extends StatelessWidget{
-  WordBox({super.key});
+  GameState as;
+
+  WordBox({super.key, required this.as});
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +142,7 @@ class WordBox extends StatelessWidget{
                   height: 100,
                   width: 500,
                   child: Center(
-                    child: Text("Funcion Aun no Implementada")
+                    child: Text(as.hiddenWord)
                   )
                 )
         )
@@ -148,7 +153,8 @@ class WordBox extends StatelessWidget{
 //Widget para crear los botones del teclado
 class KeyboardButton extends StatelessWidget{
   final String letter;
-  KeyboardButton({super.key, required this.letter});
+  GameState as;
+  KeyboardButton({super.key, required this.letter, required this.as});
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +165,7 @@ class KeyboardButton extends StatelessWidget{
           style: TextButton.styleFrom(
             backgroundColor: Colors.grey
           ),
-          onPressed: (){ GameState().IsCharacterCorrect(GetLetter()); },
+          onPressed: (){ as.IsCharacterCorrect(GetLetter()); },
           child: Center(child: Text(letter)),
         ),
       )

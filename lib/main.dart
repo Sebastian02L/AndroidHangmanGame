@@ -41,6 +41,7 @@ class GameState extends ChangeNotifier {
   var puntuation = 0;
   var currentRound = 0;
   var gameMode = 0;
+  var setUp = false;
 
   var currentWord;
   var hiddenWord;
@@ -49,38 +50,40 @@ class GameState extends ChangeNotifier {
 
   //
   void SetUpRound() {
-    currentWord = words.removeAt(0);
-    int characters = currentWord.length;
-    String word = "";
+    if(!setUp){
+      currentWord = words[0];
+      int characters = currentWord.length;
+      String word = "";
 
-    for (int i = 0; i < characters; i++) {
-      word += "_ ";
+      for (int i = 0; i < characters; i++) {
+        word += "_ ";
+      }
+
+      hiddenWord = word;
+      print(hiddenWord);
     }
-    hiddenWord = word;
   }
 
   //Comprueba si la letra pulsada es correcta
   void IsCharacterCorrect(String char) {
     if (currentWord.contains(char)) {
+      print("correcto");
       //Muestro la letra adivinada
-
-      //Actualizo la UI
+      SwapLetter(char);
     }
+    else {
+      print("mal");
+    }
+
+    UpdateUI();
   }
 
-
   void SwapLetter(String letter){
-    List<int> indexes = [];
-
-    //Recoremos la palabra para guardarnos la posicion de las letras que adivinamos
+    //Recorremos la palabra para guardarnos la posicion de las letras que adivinamos
     for(int i = 0; i < currentWord.lenght; i++){
       if(currentWord[i] == letter){
-        indexes.add(i);
+        hiddenWord[i] = letter;
       }
-    }
-
-    for(int i = 0; i < indexes.length; i++){
-
     }
   }
 
@@ -88,16 +91,20 @@ class GameState extends ChangeNotifier {
 
   void UpdatePuntuation(int points) {
     puntuation = points;
-    notifyListeners();
+    UpdateUI();
   }
 
   void UpdateRound() {
     puntuation += 1;
-    notifyListeners();
+    UpdateUI();
   }
 
   void UpdateWordBox(String word){
     hiddenWord = word;
+    UpdateUI();
+  }
+
+  void UpdateUI(){
     notifyListeners();
   }
 }
