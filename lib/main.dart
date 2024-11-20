@@ -12,12 +12,7 @@ import 'ResultsScreen.dart';
 
 //Punto de inicio de nuestra aplicacion
 void main() {
-  runApp(
-    ChangeNotifierProvider( //Como utilizamos la libreria Provider, toda la app debe estar envuelta en ella para funcionar correctamente
-      create: (context) => GameManager(),
-      child: MyApp(),
-    ),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -25,9 +20,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: MenuPrincipal(), // PONER AQUI LA PRIMERA PANTALLA QUE DEBE VERSE
+    return ChangeNotifierProvider(
+      create: (context) => GameManager(),
+      child: MaterialApp(
+        title: "Hangman Game",
+        theme: ThemeData(
+          useMaterial3: true,
+        ),
+        home: Scaffold(
+          body: MenuPrincipal(), // PONER AQUI LA PRIMERA PANTALLA QUE DEBE VERSE
+        ),
       ),
     );
   }
