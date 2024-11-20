@@ -27,9 +27,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           useMaterial3: true,
         ),
-        home: Scaffold(
-          body: MenuPrincipal(), // PONER AQUI LA PRIMERA PANTALLA QUE DEBE VERSE
-        ),
+        home: MenuPrincipal(),
       ),
     );
   }
