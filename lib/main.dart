@@ -9,6 +9,7 @@ import 'GameSettingsScreen.dart';
 import 'MainMenuScreen.dart';
 import 'RankingScreen.dart';
 import 'ResultsScreen.dart';
+import 'dart:async';
 
 //Punto de inicio de nuestra aplicacion
 void main() {
@@ -35,77 +36,133 @@ class MyApp extends StatelessWidget {
 
 //Clase que representa el estado del juego
 class GameState extends ChangeNotifier {
-  //Lista de palabras a adivinar, teniendo que recibir la lista de la query a la BD
-  var words = List.of(["Tomate", "Casa"]);
+  //Lista de palabras a adivinar
+  var words;
+  var username = "";
+  //Variable que define los dos modos de juego
+  bool MarathonMode = true;
 
   //Variables de la interfaz
   var puntuation = 0;
-  var numErrores = 0;
-  var currentRound = 0;
+  var numErrors = 0;
+  var currentRound = 1;
   String maxRounds = "";
+  var currentTime; //Tiempo de la partida para el modo Maraton
 
-  bool MarathonMode = true;
-
-  //Indica si debe preparar una nueva ronda
-  var setUp = true;
+  //Indica si debe preparar una nueva partida
+  var setUpMatch = true;
 
   //Variables de la partida
   var currentWord;  //Cadena a adivinar
   var hiddenWord; //Cadena que se muestra en la UI
 
-  //En Flutter las cadenas de tetxo son innmutables, es decir, no podemos acceder a un char y cambiarlo
+  //Constantes de la partida
+  final MARATHON_MODE_TIME = 60;
+  final MARATHON_MODE_MAX_ROUNDS = "∞";
+  final NORMAL_MODE_MAX_ROUNDS = "10";
+  final MAX_ERRORS = 10;
+
+  //En Flutter las cadenas de texto son inmutables, es decir, no podemos acceder a un char y cambiarlo directamente,
   //para ello utilizamos un buffer.
   StringBuffer buffer = StringBuffer();
 
-  ////// METODOS PARA GESTIONAR LA PARTIDA //////
+  //////////////////// METODOS PARA GESTIONAR LA PARTIDA ////////////////////
+
+  //Prepara la partida con la configuracion aplicada en la pantalla de configuracion
+  void SetUpGame(){
+    //Solo debe ejecutarse una vez al iniciar la partida
+    if(setUpMatch){
+
+      if(MarathonMode){
+        maxRounds = MARATHON_MODE_MAX_ROUNDS;
+        currentTime = MARATHON_MODE_TIME;
+
+        //Obtenemos la lista de palabras de la BD que aun no existe. Usamos estas de prueba
+        words = List.of(["Tomate", "Casa", "Almendra", "Casita", "Mesa", "Esporas", "Galleta", "Queso", "Pimienta", "Pera"]);
+        SetUpRound();
+        setUpMatch = false;
+        //Iniciar el temporizador. Cada segundo se actualizara el tiempo.
+        Timer.periodic(Duration(seconds: 1), (timer) {UpdateTimer(timer) ;});
+      }
+      else {
+          maxRounds = NORMAL_MODE_MAX_ROUNDS;
+          currentTime = double.infinity; //No puedo poner el mismo simbolo porque arriba la variable es un int en el modo maraton y aqui un string
+
+          //Obtenemos la lista de palabras de la BD que aun no existe
+          words = List.of(["Tomate", "Casa", "Almendra", "Casita", "Mesa", "Esporas", "Galleta", "Queso", "Pimienta", "Pera"]);
+          SetUpRound();
+          setUpMatch = false;
+        }
+    }
+  }
+
+  //Se llama cada segundo y actualiza el tiempo de la partida
+  void UpdateTimer(Timer timer){
+    currentTime -= 1;
+    UpdateUI();
+
+    //Esto detiene el temporizador una vez que se pierde en el modo maraton
+    if(numErrors >= MAX_ERRORS){
+      timer.cancel();
+    }
+
+    if(currentTime == 0){
+      timer.cancel();
+      FinishMatch();
+    }
+  }
 
   //Prepara las rondas del juego
   void SetUpRound() {
-
-    if(setUp){
       currentWord = words[0].toLowerCase();
       words.removeAt(0);
 
       int characters = currentWord.length;
       String word = "";
 
-      //Crea la cadena de tetxo oculta segun el numero de letras
+      //Crea la cadena de texto oculta segun el numero de letras
       for (int i = 0; i < characters; i++) {
         word += "_";
       }
 
       hiddenWord = word;
-      setUp = false;
-
-        if(MarathonMode) {
-          maxRounds = "∞";
-        }
-        else {
-          maxRounds = "10";
-        }
-      }
-
+      numErrors = 0;
     }
 
   //Comprueba si la letra pulsada es correcta o incorrecta
   void IsCharacterCorrect(String char) {
-
     if (currentWord.contains(char)) {
       //Muestra la letra en la cadena oculta
       SwapLetter(char);
     }
     else {
-      numErrores++;
+      numErrors++;
+    }
+
+    //Comprobamos si ya ha perdido todas sus "vidas"
+    if(numErrors >= MAX_ERRORS){
+      //Se detiene el temporizador
+      print("Numero maximo de errores alcanzados");
+      FinishMatch();
     }
 
     //Comprobamos si ha adivinado toda la palabra
     if(CheckWinCondition()){
-      setUp = true;
-      puntuation += 100;
       currentRound += 1;
+      puntuation += 100;
+      if(MarathonMode){
+        Timer(Duration(milliseconds: 500), () {SetUpRound();});
+      }
+      else if(currentRound <= int.parse(maxRounds)){
+        Timer(Duration(milliseconds: 500), () {SetUpRound();});
+      }
+      else{
+        print("Rondas completadas");
+        FinishMatch();
+      }
     }
 
-    //Actualiza el contenido de la UI
+    //Actualiza el contenido de la UI independientemente de si ha acertado o no
     UpdateUI();
   }
 
@@ -135,12 +192,37 @@ class GameState extends ChangeNotifier {
   }
 
   Image GetImage(){
-    if(numErrores % 2 == 0) {
+    if(numErrors % 2 == 0) {
       return Image.asset('assets/Images/Ahorcado.jpg');
     }
     else {
       return Image.asset('assets/Gifs/HungManBackground01.gif');
     }
+  }
+
+  //Resetea los valores por defecto de cara a iniciar nuevas partidas.
+  //IMPORTANTE: Suponiendo que al acabar una partida, se pasa a la pantalla de resultados y se hace lo siguiente:
+  //1) Mostrar los resultados 2) Subirlos al ranking de la BD, este metodo debe llamarse DESPUES de subirlo a la BD.
+  void ResetGameplayValues(){
+    puntuation = 0;
+    numErrors = 0;
+    currentRound = 0;
+    maxRounds = "";
+    MarathonMode = true;
+    setUpMatch = true;
+    currentWord = "";
+    hiddenWord = "";
+  }
+
+  //Se llama al termianr la partida de cualquier manera
+  void FinishMatch(){
+    print("Ha terminado la partida");
+    GoToResultScreen();
+  }
+
+  //Pasa a la siguiente pantalla
+  void GoToResultScreen(){
+
   }
 
   ////// METODOS PARA ACTUALIZAR LA INTERFAZ //////

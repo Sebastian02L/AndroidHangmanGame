@@ -10,7 +10,7 @@ class GameUI extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<GameState>();
 
-   appState.SetUpRound();
+   appState.SetUpGame();
 
     return Scaffold(
       body: Container( //Lo encerramos todo en un container para poner un padding superior
@@ -19,7 +19,33 @@ class GameUI extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //Parte superior de la interfaz, las cards de puntuacion y numero de palabras
+                //Parte superior de la interfaz, las cards de puntuacion, numero de rondas, tiempo y los textos
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    //Textos superiores
+                    Flexible( //Flexible permite que el widget sea responsivo, indicando en flex cuanto tiene que ocupar
+                        flex: 2,
+                        child: TextCard(text: "Round"),
+                    ),
+                    Flexible(
+                        flex: 2,
+                        child: SizedBox(child: Padding(padding: EdgeInsets.all(10)))
+                    ),
+                    Flexible(
+                        flex: 6,
+                      child: TextCard(text: "Puntuation"),
+                    ),
+                    Flexible(
+                        flex: 2,
+                        child: SizedBox(child: Padding(padding: EdgeInsets.all(10)))),
+                    Flexible(
+                        flex: 2,
+                      child: TextCard(text: "Time"),
+                    )
+                  ],
+                ),
+                // Cards superiores
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -32,6 +58,12 @@ class GameUI extends StatelessWidget {
                     Flexible(
                         flex: 6,
                         child: PuntuationCard(puntuation: appState.puntuation)),
+                    Flexible(
+                        flex: 2,
+                        child: SizedBox(child: Padding(padding: EdgeInsets.all(10)))),
+                    Flexible(
+                        flex: 2,
+                        child: PuntuationCard(puntuation: appState.currentTime))
                   ],
                 ),
                 SizedBox(height: 30),
@@ -54,6 +86,27 @@ class GameUI extends StatelessWidget {
           ),
         )
       )
+    );
+  }
+}
+
+//Widget para colocar el texto que va encima de los cards de la sona superior de la interfaz
+class TextCard extends StatelessWidget{
+  final String text;
+  const TextCard({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5)
+      ),
+      child: SizedBox( //El child box creara un padding alrededor del texto
+        height: 20,
+        child: Center(
+          child: Text("$text"),
+        ),
+      ),
     );
   }
 }
@@ -143,7 +196,7 @@ class WordBox extends StatelessWidget{
                   height: 100,
                   width: 500,
                   child: Center(
-                    child: Text(appState.hiddenWord)
+                    child: Text(appState.hiddenWord, style: TextStyle(letterSpacing: 2.0),)
                   )
                 )
         )
