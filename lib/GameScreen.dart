@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'main.dart';
@@ -8,19 +10,20 @@ class GameUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<GameState>();
-    var initialize = true;
+    var canShake = true;
     appState.SetUpGame();
-    if(initialize){
-      var accelerometerHandler = AccelerometerHandler(
-        shakeThreshold: 15.0,
-        onShake: () {
-          print("AGITADO");
+    var accelerometerHandler = AccelerometerHandler(
+      shakeThreshold: 15.0,
+      onShake: () {
+        print("AGITADO");
+        if(appState.canShake) {
+          appState.canShake = false;
           appState.IsCharacterCorrect('_');
-        },
-      );
-      accelerometerHandler.startListening();
-      initialize = false;
-    }
+          appState.warningText = "¡CUIDADO! Si agitas demasiado el móvil maltratarás a Miguel.";
+          Timer(Duration(milliseconds: 3000), () {appState.canShake = true; appState.warningText = "";});        }
+      },
+    );
+    accelerometerHandler.startListening();
 
 
     return Scaffold(
@@ -199,12 +202,24 @@ class GamePlaceHolder extends StatelessWidget {
     var appState = context.watch<GameState>();
 
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 5),
-        child: AspectRatio(
-            aspectRatio: 1, //Se asegura de que la relacion de aspecto del hijo sea 1
-            child: Center(
-                child: appState.GetImage()
-            )
+        padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AspectRatio(
+              aspectRatio: 1.10, //Se asegura de que la relacion de aspecto del hijo sea 1
+              child: Center(
+                  child: appState.GetImage()
+              )
+            ),
+            Center(child: Text(
+                appState.warningText,
+                style: TextStyle(
+                  color: Colors.red, // Cambia el color del texto a rojo
+                  fontSize: 16, // Ajusta el tamaño de la fuente si es necesario
+                ),
+                textAlign: TextAlign.center, // Centra el texto dentro de la línea))
+            ))]
         )
     );
   }

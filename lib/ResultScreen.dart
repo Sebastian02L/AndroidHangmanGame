@@ -18,7 +18,7 @@ class ResultUI extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           ResultCard(text: "Palabras adivinadas:", value: appState.currentRound - 1),
-          ResultCard(text: "Letras falladas:", value: appState.totalErrors),
+          ResultCard(text: "Número de fallos:", value: appState.totalErrors),
           ResultCard(text: "Racha de letras acertadas más larga:", value: appState.highestStreak),
           NavButton(state: appState, route: GameUI(), text: "VOLVER A JUGAR"),
           NavButton(state: appState, route: MenuPrincipal(), text: "VOLVER AL MENÚ"),

@@ -68,6 +68,10 @@ class GameState extends ChangeNotifier {
     'assets/Images/image8.png',
   ];
 
+  //Variables de acelerómetro:
+  var canShake = true;
+  var warningText = "";
+
   //Lista de palabras a adivinar
   var words;
   var username = "";
@@ -272,6 +276,7 @@ class GameState extends ChangeNotifier {
     highestStreak = 0;
     correctChars.clear();
     incorrectChars.clear();
+    warningText = "";
   }
 
   //Se llama al terminar la partida de cualquier manera
@@ -319,7 +324,6 @@ class AccelerometerHandler {
     accelerometerEvents.listen((AccelerometerEvent event) {
       double magnitude = sqrt(event.x * event.x + event.y * event.y + event.z * event.z);
       if (magnitude > shakeThreshold) {
-        // Si hay agitación, dispara el callback
         onShake();
       }
     });
