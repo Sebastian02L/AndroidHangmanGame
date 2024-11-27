@@ -14,7 +14,7 @@ class GameUI extends StatelessWidget {
 
     return Scaffold(
       body: Container( //Lo encerramos todo en un container para poner un padding superior
-        padding: EdgeInsets.only(top: 20.0),
+        padding: EdgeInsets.only(top: 2),
         child: Center( //Todos los elementos de la UI estarán centrados en la pantalla
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -25,23 +25,23 @@ class GameUI extends StatelessWidget {
                   children: [
                     //Textos superiores
                     Flexible( //Flexible permite que el widget sea responsivo, indicando en flex cuanto tiene que ocupar
-                        flex: 2,
-                        child: TextCard(text: "Round"),
+                        flex: 3,
+                        child: TextCard(text: "Ronda"),
                     ),
                     Flexible(
                         flex: 2,
-                        child: SizedBox(child: Padding(padding: EdgeInsets.all(10)))
+                        child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))
                     ),
                     Flexible(
                         flex: 6,
-                      child: TextCard(text: "Puntuation"),
+                      child: TextCard(text: "Puntos"),
                     ),
                     Flexible(
                         flex: 2,
-                        child: SizedBox(child: Padding(padding: EdgeInsets.all(10)))),
+                        child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))),
                     Flexible(
-                        flex: 2,
-                      child: TextCard(text: "Time"),
+                        flex: 3,
+                      child: TextCard(text: "Tiempo"),
                     )
                   ],
                 ),
@@ -50,23 +50,23 @@ class GameUI extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Flexible( //Flexible permite que el widget sea responsivo, indicando en flex cuanto tiene que ocupar
-                        flex: 2,
+                        flex: 3,
                         child: WordsCounter(counter: appState.currentRound,totalWords: appState.maxRounds)),
                     Flexible(
                         flex: 2,
-                        child: SizedBox(child: Padding(padding: EdgeInsets.all(10)))),
+                        child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))),
                     Flexible(
                         flex: 6,
                         child: PuntuationCard(puntuation: appState.puntuation)),
                     Flexible(
                         flex: 2,
-                        child: SizedBox(child: Padding(padding: EdgeInsets.all(10)))),
+                        child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))),
                     Flexible(
-                        flex: 2,
-                        child: PuntuationCard(puntuation: appState.currentTime))
+                        flex: 3,
+                        child: TimeCard(time: appState.currentTime, isMarathon: appState.MarathonMode,))
                   ],
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 10),
                 //Zona donde aparece el muñeco
                 Flexible(
                     flex : 2,
@@ -133,6 +133,29 @@ class PuntuationCard extends StatelessWidget{
   }
 }
 
+//Widget para crear la card del tiempo
+class TimeCard extends StatelessWidget{
+
+  final int time;
+  final bool isMarathon;
+  const TimeCard({super.key, required this.time, required this.isMarathon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5)
+      ),
+      child: SizedBox( //El child box creara un padding alrededor del texto
+        height: 50,
+        child: Center(
+          child: (time == 0 && !isMarathon)? Text("∞") : Text("$time"),
+        ),
+      ),
+    );
+  }
+}
+
 //Widget que crea el cartel donde se muestra el contador de palabras y las palabras que faltan
 class WordsCounter extends StatelessWidget{
 
@@ -190,7 +213,7 @@ class WordBox extends StatelessWidget{
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5)),
                 child: SizedBox(
-                  height: 100,
+                  height: 50,
                   width: 500,
                   child: Center(
                     child: Text(appState.hiddenWord, style: TextStyle(letterSpacing: 2.0),)
@@ -242,7 +265,7 @@ class Keyboard extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [

@@ -63,7 +63,7 @@ class GameState extends ChangeNotifier {
   var totalErrors = 0;
   var currentRound = 1;
   String maxRounds = "";
-  var currentTime; //Tiempo de la partida para el modo Maraton
+  var currentTime = 0; //Tiempo de la partida para el modo Maraton
   var currentStreak = 0;
   var highestStreak = 0;
 
@@ -80,7 +80,7 @@ class GameState extends ChangeNotifier {
   List<String> incorrectChars = [""];
 
   //Constantes de la partida
-  final MARATHON_MODE_TIME = 60;
+  final MARATHON_MODE_TIME = 120;
   final MARATHON_MODE_MAX_ROUNDS = "∞";
   final NORMAL_MODE_MAX_ROUNDS = "10";
   final MAX_ERRORS = 7;
@@ -109,7 +109,6 @@ class GameState extends ChangeNotifier {
       }
       else {
         maxRounds = NORMAL_MODE_MAX_ROUNDS;
-        currentTime = double.infinity; //No puedo poner el mismo simbolo porque arriba la variable es un int en el modo maraton y aqui un string
 
         //Obtenemos la lista de palabras de la BD que aun no existe
         words = List.of(["Tomate", "Casa", "Almendra", "Casita", "Mesa", "Esporas", "Galleta", "Queso", "Pimienta", "Pera"]);
