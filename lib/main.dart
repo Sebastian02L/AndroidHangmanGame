@@ -2,8 +2,11 @@
 
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import 'Database/csv_loader.dart';
+import 'Database/database_helper.dart';
 import 'GameScreen.dart';
 import 'GameSettingsScreen.dart';
 import 'MainMenuScreen.dart';
@@ -14,7 +17,18 @@ import 'dart:async';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 //Punto de inicio de nuestra aplicacion
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+
+  try {
+    // Carga los datos desde el archivo CSV a la base de datos
+    await loadWordsFromCSV();
+    print("Datos cargados exitosamente.");
+  } catch (e) {
+    print("Error al cargar los datos: $e");
+  }
+
+  // Ahora ejecuta la aplicación después de haber cargado los datos.
   runApp(const MyApp());
 }
 
@@ -92,10 +106,9 @@ class GameState extends ChangeNotifier {
   //////////////////// METODOS PARA GESTIONAR LA PARTIDA ////////////////////
 
   //Prepara la partida con la configuracion aplicada en la pantalla de configuracion
-  void SetUpGame(){
+  void SetUpGame() {
     //Solo debe ejecutarse una vez al iniciar la partida
     if(setUpMatch){
-
       if(MarathonMode){
         maxRounds = MARATHON_MODE_MAX_ROUNDS;
         currentTime = MARATHON_MODE_TIME;
@@ -291,6 +304,8 @@ class GameState extends ChangeNotifier {
   }
   }
 }
+
+
 
 /*
 class MyApp extends StatelessWidget {
