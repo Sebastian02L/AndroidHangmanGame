@@ -8,9 +8,11 @@ import 'GameScreen.dart';
 import 'GameSettingsScreen.dart';
 import 'MainMenuScreen.dart';
 import 'RankingScreen.dart';
-import 'ResultsScreen.dart';
+import 'ResultScreen.dart';
+import 'ResultScreen.dart';
 import 'dart:async';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 //Punto de inicio de nuestra aplicacion
 void main() {
   runApp(const MyApp());
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => GameState(),
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         title: "Hangman Game",
         theme: ThemeData(
           useMaterial3: true,
@@ -45,9 +48,12 @@ class GameState extends ChangeNotifier {
   //Variables de la interfaz
   var puntuation = 0;
   var numErrors = 0;
+  var totalErrors = 0;
   var currentRound = 1;
   String maxRounds = "";
   var currentTime; //Tiempo de la partida para el modo Maraton
+  var currentStreak = 0;
+  var highestStreak = 0;
 
   //Indica si debe preparar una nueva partida
   var setUpMatch = true;
@@ -85,14 +91,14 @@ class GameState extends ChangeNotifier {
         Timer.periodic(Duration(seconds: 1), (timer) {UpdateTimer(timer) ;});
       }
       else {
-          maxRounds = NORMAL_MODE_MAX_ROUNDS;
-          currentTime = double.infinity; //No puedo poner el mismo simbolo porque arriba la variable es un int en el modo maraton y aqui un string
+        maxRounds = NORMAL_MODE_MAX_ROUNDS;
+        currentTime = double.infinity; //No puedo poner el mismo simbolo porque arriba la variable es un int en el modo maraton y aqui un string
 
-          //Obtenemos la lista de palabras de la BD que aun no existe
-          words = List.of(["Tomate", "Casa", "Almendra", "Casita", "Mesa", "Esporas", "Galleta", "Queso", "Pimienta", "Pera"]);
-          SetUpRound();
-          setUpMatch = false;
-        }
+        //Obtenemos la lista de palabras de la BD que aun no existe
+        words = List.of(["Tomate", "Casa", "Almendra", "Casita", "Mesa", "Esporas", "Galleta", "Queso", "Pimienta", "Pera"]);
+        SetUpRound();
+        setUpMatch = false;
+      }
     }
   }
 
@@ -100,6 +106,9 @@ class GameState extends ChangeNotifier {
   void UpdateTimer(Timer timer){
     currentTime -= 1;
     UpdateUI();
+    if(currentTime <= 0){
+      FinishMatch();
+    }
 
     //Esto detiene el temporizador una vez que se pierde en el modo maraton
     if(numErrors >= MAX_ERRORS){
@@ -108,7 +117,6 @@ class GameState extends ChangeNotifier {
 
     if(currentTime == 0){
       timer.cancel();
-      FinishMatch();
     }
   }
 
@@ -131,12 +139,18 @@ class GameState extends ChangeNotifier {
 
   //Comprueba si la letra pulsada es correcta o incorrecta
   void IsCharacterCorrect(String char) {
-    if (currentWord.contains(char)) {
+    if (currentWord.contains(char) && !hiddenWord.contains(char)) {
       //Muestra la letra en la cadena oculta
       SwapLetter(char);
+      currentStreak++;
     }
-    else {
+    else if(!currentWord.contains(char)){
       numErrors++;
+      totalErrors++;
+      if(currentStreak > highestStreak){
+        highestStreak = currentStreak;
+      }
+      currentStreak = 0;
     }
 
     //Comprobamos si ya ha perdido todas sus "vidas"
@@ -206,23 +220,22 @@ class GameState extends ChangeNotifier {
   void ResetGameplayValues(){
     puntuation = 0;
     numErrors = 0;
-    currentRound = 0;
+    totalErrors = 0;
+    currentRound = 1;
     maxRounds = "";
     MarathonMode = true;
     setUpMatch = true;
     currentWord = "";
     hiddenWord = "";
+    highestStreak = 0;
   }
 
   //Se llama al termianr la partida de cualquier manera
   void FinishMatch(){
     print("Ha terminado la partida");
-    GoToResultScreen();
-  }
-
-  //Pasa a la siguiente pantalla
-  void GoToResultScreen(){
-
+    navigatorKey.currentState?.push(
+      MaterialPageRoute(builder: (context) => ResultUI()),
+    );
   }
 
   ////// METODOS PARA ACTUALIZAR LA INTERFAZ //////
