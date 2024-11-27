@@ -62,6 +62,7 @@ class DatabaseHelper {
       where: 'category = ?', // Filtro por la categoría
       whereArgs: [category], // El valor de la categoría a buscar
       orderBy: 'RANDOM()', // Se aleatoriza el orden de las palabras de la categoría
+      limit: 10,
     );
 
     List<String> words = result.map((row) => row['word'] as String).toList(); // Se convierte en una lista de strings
