@@ -219,7 +219,12 @@ class KeyboardButton extends StatelessWidget{
           style: TextButton.styleFrom(
             backgroundColor: Colors.grey
           ),
-          onPressed: (){ appState.IsCharacterCorrect(letter.toLowerCase()); },
+          onPressed: (){
+            if(appState.canUseKeyboard){
+              appState.IsCharacterCorrect(letter.toLowerCase());
+            } else {
+              print("teclado desactivado hasta que inicie la siguiente ronda");}
+            },
           child: Center(child: Text(letter)),
         ),
       )

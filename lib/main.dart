@@ -61,6 +61,7 @@ class GameState extends ChangeNotifier {
   //Variables de la partida
   var currentWord;  //Cadena a adivinar
   var hiddenWord; //Cadena que se muestra en la UI
+  bool canUseKeyboard = false; //Activa o desactiva los botones del teclado
 
   //Constantes de la partida
   final MARATHON_MODE_TIME = 60;
@@ -135,6 +136,7 @@ class GameState extends ChangeNotifier {
 
       hiddenWord = word;
       numErrors = 0;
+      canUseKeyboard = true;
     }
 
   //Comprueba si la letra pulsada es correcta o incorrecta
@@ -162,13 +164,14 @@ class GameState extends ChangeNotifier {
 
     //Comprobamos si ha adivinado toda la palabra
     if(CheckWinCondition()){
+      canUseKeyboard = false;
       currentRound += 1;
       puntuation += 100;
       if(MarathonMode){
-        Timer(Duration(milliseconds: 500), () {SetUpRound();});
+        Timer(Duration(milliseconds: 10), () {SetUpRound();});
       }
       else if(currentRound <= int.parse(maxRounds)){
-        Timer(Duration(milliseconds: 500), () {SetUpRound();});
+        Timer(Duration(milliseconds: 2000), () {SetUpRound();});
       }
       else{
         print("Rondas completadas");
@@ -225,6 +228,7 @@ class GameState extends ChangeNotifier {
     maxRounds = "";
     MarathonMode = true;
     setUpMatch = true;
+    canUseKeyboard = false;
     currentWord = "";
     hiddenWord = "";
     highestStreak = 0;
