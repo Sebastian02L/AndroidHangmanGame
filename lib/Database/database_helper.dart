@@ -47,9 +47,25 @@ class DatabaseHelper {
   }
 
   // Método para obtener todas las palabras
-  Future<List<Map<String, dynamic>>> getWords() async {
+  Future<List<String>> getWords() async {
     final db = await database;
-    return await db.query('words');
+    final result = await db.query('words',orderBy: 'RANDOM()');
+    List<String> words = result.map((row) => row['word'] as String).toList(); // Se convierte en una lista de strings
+    return words;
+  }
+
+  Future<List<String>> getWordsByCategory(String category) async{
+    final db = await database;
+    final result = await db.query(
+      'words',
+      columns: ['word'],  // Solo seleccionamos la columna 'palabra'
+      where: 'category = ?', // Filtro por la categoría
+      whereArgs: [category], // El valor de la categoría a buscar
+      orderBy: 'RANDOM()', // Se aleatoriza el orden de las palabras de la categoría
+    );
+
+    List<String> words = result.map((row) => row['word'] as String).toList(); // Se convierte en una lista de strings
+    return words;
   }
 
   //Método para
