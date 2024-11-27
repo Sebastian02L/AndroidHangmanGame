@@ -187,6 +187,7 @@ class WordBox extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<GameState>();
+
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 30.0),
         child: Card(
@@ -207,23 +208,30 @@ class WordBox extends StatelessWidget{
 //Widget para crear los botones del teclado
 class KeyboardButton extends StatelessWidget{
   final String letter;
+  bool? characterState;
+
   KeyboardButton({super.key, required this.letter});
 
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<GameState>();
+    bool? characterState = appState.CheckButtonStatus(letter.toLowerCase()); //Comprueba el estado del boton para determinar luego el color del boton
+
     return Flexible(
       flex: 1,
       child: Padding(padding: EdgeInsets.all(2),
         child: TextButton(
           style: TextButton.styleFrom(
-            backgroundColor: Colors.grey
+            backgroundColor: characterState == null? Colors.grey : characterState == true? Colors.green : Colors.red
           ),
           onPressed: (){
-            if(appState.canUseKeyboard){
+            if(appState.canUseKeyboard && characterState == null){
               appState.IsCharacterCorrect(letter.toLowerCase());
             } else {
-              print("teclado desactivado hasta que inicie la siguiente ronda");}
+              print("teclado desactivado hasta que inicie la siguiente ronda o tecla ya usada");
+            }
+
+            //characterState = appState.CheckButtonStatus(letter.toLowerCase());
             },
           child: Center(child: Text(letter)),
         ),

@@ -43,7 +43,7 @@ class GameState extends ChangeNotifier {
   var words;
   var username = "";
   //Variable que define los dos modos de juego
-  bool MarathonMode = true;
+  bool MarathonMode = false;
 
   //Variables de la interfaz
   var puntuation = 0;
@@ -62,6 +62,10 @@ class GameState extends ChangeNotifier {
   var currentWord;  //Cadena a adivinar
   var hiddenWord; //Cadena que se muestra en la UI
   bool canUseKeyboard = false; //Activa o desactiva los botones del teclado
+
+  //Listas que almacenaran las letras usadas, tanto las correctas como las incorrectas
+  List<String> correctChars = [""];
+  List<String> incorrectChars = [""];
 
   //Constantes de la partida
   final MARATHON_MODE_TIME = 60;
@@ -123,6 +127,7 @@ class GameState extends ChangeNotifier {
 
   //Prepara las rondas del juego
   void SetUpRound() {
+    print("preparando ronda");
       currentWord = words[0].toLowerCase();
       words.removeAt(0);
 
@@ -137,6 +142,9 @@ class GameState extends ChangeNotifier {
       hiddenWord = word;
       numErrors = 0;
       canUseKeyboard = true;
+      incorrectChars.clear();
+      correctChars.clear();
+      UpdateUI();
     }
 
   //Comprueba si la letra pulsada es correcta o incorrecta
@@ -145,6 +153,7 @@ class GameState extends ChangeNotifier {
       //Muestra la letra en la cadena oculta
       SwapLetter(char);
       currentStreak++;
+      correctChars.add(char);
     }
     else if(!currentWord.contains(char)){
       numErrors++;
@@ -153,6 +162,7 @@ class GameState extends ChangeNotifier {
         highestStreak = currentStreak;
       }
       currentStreak = 0;
+      incorrectChars.add(char);
     }
 
     //Comprobamos si ya ha perdido todas sus "vidas"
@@ -167,8 +177,9 @@ class GameState extends ChangeNotifier {
       canUseKeyboard = false;
       currentRound += 1;
       puntuation += 100;
+
       if(MarathonMode){
-        Timer(Duration(milliseconds: 10), () {SetUpRound();});
+        Timer(Duration(milliseconds: 10), () {SetUpRound();}); //Se pasa rápido a la siguiente pregunta
       }
       else if(currentRound <= int.parse(maxRounds)){
         Timer(Duration(milliseconds: 2000), () {SetUpRound();});
@@ -178,7 +189,6 @@ class GameState extends ChangeNotifier {
         FinishMatch();
       }
     }
-
     //Actualiza el contenido de la UI independientemente de si ha acertado o no
     UpdateUI();
   }
@@ -232,9 +242,11 @@ class GameState extends ChangeNotifier {
     currentWord = "";
     hiddenWord = "";
     highestStreak = 0;
+    correctChars.clear();
+    incorrectChars.clear();
   }
 
-  //Se llama al termianr la partida de cualquier manera
+  //Se llama al terminar la partida de cualquier manera
   void FinishMatch(){
     print("Ha terminado la partida");
     navigatorKey.currentState?.push(
@@ -245,6 +257,21 @@ class GameState extends ChangeNotifier {
   ////// METODOS PARA ACTUALIZAR LA INTERFAZ //////
   void UpdateUI(){
     notifyListeners();
+  }
+
+  //
+  bool? CheckButtonStatus(String character){
+    //Comprobamos si la letra es usada es correcta y por ende la ponemos de verde
+    if(correctChars.contains(character)){
+      return true;
+    }
+    //Comprobamos si la letra usada es incorrecta y por ende la ponemos rojo
+    else if(incorrectChars.contains(character)){
+      return false;
+    }
+    else {
+      return null;
+  }
   }
 }
 
