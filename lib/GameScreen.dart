@@ -168,12 +168,8 @@ class GamePlaceHolder extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 5),
         child: AspectRatio(
             aspectRatio: 1, //Se asegura de que la relacion de aspecto del hijo sea 1
-            child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                child: Center(
-                  child: appState.GetImage()
-                )
+            child: Center(
+                child: appState.GetImage()
             )
         )
     );

@@ -39,11 +39,23 @@ class MyApp extends StatelessWidget {
 
 //Clase que representa el estado del juego
 class GameState extends ChangeNotifier {
+  //Lista de fotos:
+  final List<String> images = [
+    'assets/Images/image1.png',
+    'assets/Images/image2.png',
+    'assets/Images/image3.png',
+    'assets/Images/image4.png',
+    'assets/Images/image5.png',
+    'assets/Images/image6.png',
+    'assets/Images/image7.png',
+    'assets/Images/image8.png',
+  ];
+
   //Lista de palabras a adivinar
   var words;
   var username = "";
   //Variable que define los dos modos de juego
-  bool MarathonMode = false;
+  bool MarathonMode = true;
 
   //Variables de la interfaz
   var puntuation = 0;
@@ -71,7 +83,7 @@ class GameState extends ChangeNotifier {
   final MARATHON_MODE_TIME = 60;
   final MARATHON_MODE_MAX_ROUNDS = "∞";
   final NORMAL_MODE_MAX_ROUNDS = "10";
-  final MAX_ERRORS = 10;
+  final MAX_ERRORS = 7;
 
   //En Flutter las cadenas de texto son inmutables, es decir, no podemos acceder a un char y cambiarlo directamente,
   //para ello utilizamos un buffer.
@@ -219,12 +231,7 @@ class GameState extends ChangeNotifier {
   }
 
   Image GetImage(){
-    if(numErrors % 2 == 0) {
-      return Image.asset('assets/Images/Ahorcado.jpg');
-    }
-    else {
-      return Image.asset('assets/Gifs/HungManBackground01.gif');
-    }
+    return Image.asset(images[numErrors]);
   }
 
   //Resetea los valores por defecto de cara a iniciar nuevas partidas.
@@ -248,7 +255,12 @@ class GameState extends ChangeNotifier {
 
   //Se llama al terminar la partida de cualquier manera
   void FinishMatch(){
+    canUseKeyboard = false;
     print("Ha terminado la partida");
+    Timer(Duration(milliseconds: 1000), () {GoToResults();});
+  }
+
+  void GoToResults(){
     navigatorKey.currentState?.push(
       MaterialPageRoute(builder: (context) => ResultUI()),
     );
