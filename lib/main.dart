@@ -14,7 +14,10 @@ import 'RankingScreen.dart';
 import 'ResultScreen.dart';
 import 'ResultScreen.dart';
 import 'dart:async';
+import 'package:sensors_plus/sensors_plus.dart';
+import 'dart:math';
 
+typedef ShakeCallback = void Function();
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 //Punto de inicio de nuestra aplicacion
 void main() async{
@@ -301,11 +304,27 @@ class GameState extends ChangeNotifier {
     }
     else {
       return null;
-  }
+    }
   }
 }
 
+class AccelerometerHandler {
+  final double shakeThreshold;
+  final ShakeCallback onShake;
 
+  AccelerometerHandler({this.shakeThreshold = 15.0, required this.onShake});
+
+  void startListening() {
+    print("Acelerómetro escuchando");
+    accelerometerEvents.listen((AccelerometerEvent event) {
+      double magnitude = sqrt(event.x * event.x + event.y * event.y + event.z * event.z);
+      if (magnitude > shakeThreshold) {
+        // Si hay agitación, dispara el callback
+        onShake();
+      }
+    });
+  }
+}
 
 /*
 class MyApp extends StatelessWidget {

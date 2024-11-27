@@ -11,6 +11,9 @@ import 'package:gif/gif.dart';
 import 'dart:io' ;
 import 'GameScreen.dart';
 
+
+import 'main.dart';
+
 class MenuPrincipal extends StatefulWidget {
   const MenuPrincipal({Key? key}) : super(key: key);
 

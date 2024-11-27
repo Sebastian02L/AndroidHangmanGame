@@ -5,12 +5,23 @@ import 'main.dart';
 //Widget que contiene toda la interfaz de la pantalla de juego
 class GameUI extends StatelessWidget {
   const GameUI({super.key});
-
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<GameState>();
+    var initialize = true;
+    appState.SetUpGame();
+    if(initialize){
+      var accelerometerHandler = AccelerometerHandler(
+        shakeThreshold: 15.0,
+        onShake: () {
+          print("AGITADO");
+          appState.IsCharacterCorrect('_');
+        },
+      );
+      accelerometerHandler.startListening();
+      initialize = false;
+    }
 
-   appState.SetUpGame();
 
     return Scaffold(
       body: Container( //Lo encerramos todo en un container para poner un padding superior
