@@ -139,7 +139,6 @@ class GameState extends ChangeNotifier {
 
   //Prepara las rondas del juego
   void SetUpRound() {
-    print("preparando ronda");
       currentWord = words[0].toLowerCase();
       words.removeAt(0);
 
@@ -156,7 +155,8 @@ class GameState extends ChangeNotifier {
       canUseKeyboard = true;
       incorrectChars.clear();
       correctChars.clear();
-      UpdateUI();
+
+      print("Ronda preparada");
     }
 
   //Comprueba si la letra pulsada es correcta o incorrecta
@@ -191,10 +191,16 @@ class GameState extends ChangeNotifier {
       puntuation += 100;
 
       if(MarathonMode){
-        Timer(Duration(milliseconds: 10), () {SetUpRound();}); //Se pasa rápido a la siguiente pregunta
+        Timer(Duration(milliseconds: 10), () {
+          SetUpRound();
+          UpdateUI();
+        }); //Se pasa rápido a la siguiente pregunta
       }
       else if(currentRound <= int.parse(maxRounds)){
-        Timer(Duration(milliseconds: 2000), () {SetUpRound();});
+        Timer(Duration(milliseconds: 2000), () {
+          SetUpRound();
+          UpdateUI();
+        });
       }
       else{
         print("Rondas completadas");
