@@ -47,6 +47,7 @@ class MyApp extends StatelessWidget {
         title: "Hangman Game",
         theme: ThemeData(
           useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         ),
         home: MenuPrincipal(),
       ),
