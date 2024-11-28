@@ -290,7 +290,7 @@ class _MenuPrincipalState extends State<MenuPrincipal>
 
                 GenericButton(
                   buttonName: 'JUGAR',
-                  widthFactor: 0.4,
+                  widthFactor: 0.6,
                   heightFactor: 0.1,
                   onPressed: () {
                     Navigator.push(
@@ -302,7 +302,7 @@ class _MenuPrincipalState extends State<MenuPrincipal>
                 const SizedBox(height: 20),
                 GenericButton(
                   buttonName: 'RANKING',
-                  widthFactor: 0.4,
+                  widthFactor: 0.5,
                   heightFactor: 0.1,
                   onPressed: () {
                     Navigator.push(
@@ -315,7 +315,7 @@ class _MenuPrincipalState extends State<MenuPrincipal>
                 if (!kIsWeb)
                   GenericButton(
                     buttonName: 'SALIR',
-                    widthFactor: 0.4,
+                    widthFactor: 0.5,
                     heightFactor: 0.1,
                     onPressed: () {
                       // Acción para salir
@@ -393,7 +393,7 @@ class GenericButton extends StatelessWidget {
         onPressed: onPressed, // Asigna la función onPressed pasada como parámetro
         child: Text(
           buttonName,
-          style: GoogleFonts.permanentMarker(fontSize: 40), // Asegurar que la fuente sea la correcta
+          style: GoogleFonts.permanentMarker(fontSize: 30), // Asegurar que la fuente sea la correcta
         ),
         style: ElevatedButton.styleFrom(
           shadowColor: Colors.blue,
