@@ -1,3 +1,4 @@
+import 'package:dadm_practica2/MainMenuScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'main.dart';
@@ -25,9 +26,12 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
 
+
     return Scaffold(
+
       body: Stack(
         children: [
+          //GIF BACKGROUND
           Positioned.fill(
             child: Image.asset(
               'assets/Gifs/HungManBackground01.gif',
@@ -40,7 +44,10 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
               children: <Widget>[
                 Container(
                   child: Center(
+                    child : Padding(
+                      padding: EdgeInsets.fromLTRB(0,screenHeight*0.05,0,0),
                     child: Stack(
+
                       alignment: Alignment.topCenter,
                       children: [
                         Text(
@@ -63,11 +70,13 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
                       ],
                     ),
                   ),
+                  ),
                 ),
                 const SizedBox(height: 5),
+
                 Container(
                   width: screenWidth * 0.4,
-                  height: screenHeight * 0.2,
+                  height: screenHeight * 0.5,
                   decoration: BoxDecoration(color: Colors.blue),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,13 +100,28 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
                                 'aaaa - 0'
                               ),
                             );
-                          },
+                            },
                         ),
                       ),
                     ],
                   ),
                 ),
               ],
+            ),
+          ),
+          Positioned(
+            bottom: 20, // Ajusta la posición vertical del botón
+            left: 20, // Ajusta la posición horizontal del botón
+            width: screenWidth * 0.2,
+            height: screenHeight * 0.1,
+            child: ElevatedButton(
+              onPressed: () {
+                // Navigar al Menú Principal
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const MenuPrincipal()), // Asegúrate de tener este widget definido
+                );
+              },
+              child: const Text('Menú Principal'), // Texto del botón
             ),
           ),
         ],
