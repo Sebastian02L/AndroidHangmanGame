@@ -349,8 +349,3 @@ class AccelerometerHandler {
     });
   }
 }
-<<<<<<< Updated upstream
-
-
-=======
->>>>>>> Stashed changes
