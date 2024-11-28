@@ -96,7 +96,7 @@ class GameState extends ChangeNotifier {
   var words;
   var username = "";
   //Variable que define los dos modos de juego
-  bool marathonMode = true;
+  bool marathonMode = false;
 
   //Variables de la interfaz
   var puntuation = 0;

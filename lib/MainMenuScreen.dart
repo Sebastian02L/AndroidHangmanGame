@@ -230,7 +230,7 @@ class _MenuPrincipalState extends State<MenuPrincipal>
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const GameUI()),
+                      MaterialPageRoute(builder: (context) => const GameSettingsUI()),
                     );
                   },
                 ),
