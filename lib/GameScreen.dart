@@ -77,7 +77,7 @@ class GameUI extends StatelessWidget {
                         child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))),
                     Flexible(
                         flex: 3,
-                        child: TimeCard(time: appState.currentTime, isMarathon: appState.MarathonMode,))
+                        child: TimeCard(time: appState.currentTime, isMarathon: appState.marathonMode,))
                   ],
                 ),
                 SizedBox(height: 10),
