@@ -28,10 +28,10 @@ class GameUI extends StatelessWidget {
 
     return Scaffold(
       body: Container( //Lo encerramos todo en un container para poner un padding superior
-        padding: EdgeInsets.only(top: 2),
+        padding: EdgeInsets.only(top: 25),
         child: Center( //Todos los elementos de la UI estarán centrados en la pantalla
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 //Parte superior de la interfaz, las cards de puntuacion, numero de rondas, tiempo y los textos
                 Row(
@@ -207,7 +207,7 @@ class GamePlaceHolder extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AspectRatio(
-              aspectRatio: 1.10, //Se asegura de que la relacion de aspecto del hijo sea 1
+              aspectRatio: 1.2, //Se asegura de que la relacion de aspecto del hijo sea 1
               child: Center(
                   child: appState.GetImage()
               )
@@ -293,7 +293,7 @@ class Keyboard extends StatelessWidget{
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 10),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
             children: [
