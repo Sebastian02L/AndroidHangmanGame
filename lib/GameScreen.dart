@@ -206,11 +206,14 @@ class GamePlaceHolder extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AspectRatio(
-              aspectRatio: 1.2, //Se asegura de que la relacion de aspecto del hijo sea 1
-              child: Center(
-                  child: appState.GetImage()
-              )
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: Center(
+                  child: appState.GetImage(),
+                ),
+              ),
             ),
             Center(child: Text(
                 appState.warningText,
