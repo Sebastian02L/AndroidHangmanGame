@@ -57,6 +57,25 @@ class MyApp extends StatelessWidget {
 
 //Clase que representa el estado del juego
 class GameState extends ChangeNotifier {
+  String? playerName;
+  String? selectedCategory;
+  String? selectedMode;
+
+  void setPlayerName(String? value){
+    playerName = value;
+  }
+
+  void setSelectedCategory(String? value){
+    selectedCategory = value;
+  }
+
+  void setSelectedMode(String? value){
+    selectedMode = value;
+    if(selectedMode == "Marathon"){
+      marathonMode = true;
+    }
+  }
+
   //Lista de fotos:
   final List<String> images = [
     'assets/Images/image1.png',
@@ -77,7 +96,7 @@ class GameState extends ChangeNotifier {
   var words;
   var username = "";
   //Variable que define los dos modos de juego
-  bool MarathonMode = true;
+  bool marathonMode = true;
 
   //Variables de la interfaz
   var puntuation = 0;
@@ -117,7 +136,7 @@ class GameState extends ChangeNotifier {
   void SetUpGame() {
     //Solo debe ejecutarse una vez al iniciar la partida
     if(setUpMatch){
-      if(MarathonMode){
+      if(marathonMode){
         maxRounds = MARATHON_MODE_MAX_ROUNDS;
         currentTime = MARATHON_MODE_TIME;
 
@@ -210,7 +229,7 @@ class GameState extends ChangeNotifier {
       currentRound += 1;
       puntuation += 100;
 
-      if(MarathonMode){
+      if(marathonMode){
         Timer(Duration(milliseconds: 10), () {
           SetUpRound();
           UpdateUI();
@@ -269,7 +288,7 @@ class GameState extends ChangeNotifier {
     totalErrors = 0;
     currentRound = 1;
     maxRounds = "";
-    MarathonMode = true;
+    marathonMode = false;
     setUpMatch = true;
     canUseKeyboard = false;
     currentWord = "";
@@ -330,5 +349,8 @@ class AccelerometerHandler {
     });
   }
 }
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
