@@ -116,6 +116,7 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
             height: screenHeight * 0.1,
             child: ElevatedButton(
               onPressed: () {
+                PlayAudio("Click.mp3", 0);
                 // Navigar al Menú Principal
                 Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const MenuPrincipal()), // Asegúrate de tener este widget definido

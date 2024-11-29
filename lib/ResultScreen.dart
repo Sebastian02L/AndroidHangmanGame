@@ -70,6 +70,7 @@ class NavButton extends StatelessWidget{
       height: MediaQuery.of(context).size.height * 0.15,
       child: ElevatedButton(
         onPressed: () {
+          PlayAudio("Click.mp3", 0);
           state.ResetGameplayValues();
           Navigator.push(context,
             MaterialPageRoute(builder: (context) => route),

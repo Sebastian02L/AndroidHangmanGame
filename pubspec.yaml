@@ -45,6 +45,7 @@ dependencies:
   provider: ^6.0.0
   gif: ^2.3.0
   sensors_plus: ^3.0.4
+  audioplayers:
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +73,7 @@ flutter:
   assets:
     - assets/Images/
     - assets/Gifs/
+    - assets/Audio/
     - assets/csv/palabras.csv
 
   #   - images/a_dot_burr.jpeg

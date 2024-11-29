@@ -16,9 +16,16 @@ import 'ResultScreen.dart';
 import 'dart:async';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:math';
+import 'package:audioplayers/audioplayers.dart';
 
 typedef ShakeCallback = void Function();
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+final AudioPlayer sfxPlayer = AudioPlayer();
+final AudioPlayer screamPlayer = AudioPlayer();
+final AudioPlayer musicPlayer = AudioPlayer();
+final List<AudioPlayer> players = [sfxPlayer, screamPlayer];
+final random = Random();
+
 //Punto de inicio de nuestra aplicacion
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +37,8 @@ void main() async{
   } catch (e) {
     print("Error al cargar los datos: $e");
   }
+
+  PlayMusic("MainMusic.mp3");
 
   // Ahora ejecuta la aplicación después de haber cargado los datos.
   runApp(const MyApp());
@@ -205,6 +214,7 @@ class GameState extends ChangeNotifier {
       SwapLetter(char);
       currentStreak++;
       correctChars.add(char);
+      PlayAudio("Correct.mp3", 0);
     }
     else if(!currentWord.contains(char)){
       numErrors++;
@@ -214,6 +224,13 @@ class GameState extends ChangeNotifier {
       }
       currentStreak = 0;
       incorrectChars.add(char);
+      PlayAudio("Wrong.mp3", 0);
+      if(random.nextBool()){
+        PlayAudio("Grito1.mp3", 1);
+      }
+      else{
+        PlayAudio("Grito2.mp3", 1);
+      }
     }
 
     //Comprobamos si ya ha perdido todas sus "vidas"
@@ -340,7 +357,6 @@ class AccelerometerHandler {
   AccelerometerHandler({this.shakeThreshold = 15.0, required this.onShake});
 
   void startListening() {
-    print("Acelerómetro escuchando");
     accelerometerEvents.listen((AccelerometerEvent event) {
       double magnitude = sqrt(event.x * event.x + event.y * event.y + event.z * event.z);
       if (magnitude > shakeThreshold) {
@@ -348,4 +364,14 @@ class AccelerometerHandler {
       }
     });
   }
+}
+
+void PlayAudio(String fileName, int playerIndex) async {
+  await players[playerIndex].stop();
+  await players[playerIndex].play(AssetSource('Audio/$fileName'));
+}
+
+void PlayMusic(String fileName) async{
+  await musicPlayer.setReleaseMode(ReleaseMode.loop);
+  await musicPlayer.play(AssetSource('Audio/$fileName'));
 }

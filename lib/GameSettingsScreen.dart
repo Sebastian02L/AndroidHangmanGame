@@ -48,7 +48,9 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      PlayAudio("Click.mp3", 0);
+                    },
                     child: Icon(Icons.arrow_back, size: 30.0),
                     style: ElevatedButton.styleFrom(
                         padding:
@@ -136,6 +138,7 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    PlayAudio("Click.mp3", 0);
                     setState(() {
                       selectedMode = "Fast";
                     });
@@ -156,6 +159,7 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    PlayAudio("Click.mp3", 0);
                     setState(() {
                       selectedMode = "Marathon";
                     });
@@ -215,6 +219,7 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
             ),
             ElevatedButton(
               onPressed: () {
+                PlayAudio("Click.mp3", 0);
                 String playerName = playerNameController.text;
 
                 if (playerName != null && selectedCategory != null && selectedMode != null) {

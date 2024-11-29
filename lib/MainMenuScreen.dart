@@ -228,6 +228,7 @@ class _MenuPrincipalState extends State<MenuPrincipal>
                   widthFactor: 0.6,
                   heightFactor: 0.1,
                   onPressed: () {
+                    PlayAudio("Click.mp3", 0);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const GameSettingsUI()),
@@ -240,6 +241,7 @@ class _MenuPrincipalState extends State<MenuPrincipal>
                   widthFactor: 0.5,
                   heightFactor: 0.1,
                   onPressed: () {
+                    PlayAudio("Click.mp3", 0);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const Ranking()),
@@ -253,6 +255,7 @@ class _MenuPrincipalState extends State<MenuPrincipal>
                     widthFactor: 0.5,
                     heightFactor: 0.1,
                     onPressed: () {
+                      PlayAudio("Click.mp3", 0);
                       // Acción para salir
                       if (Platform.isAndroid || Platform.isIOS) {
                         // si está en Android/iOS, cierra
