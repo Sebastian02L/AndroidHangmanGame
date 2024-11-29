@@ -19,6 +19,7 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 
 typedef ShakeCallback = void Function();
+final DatabaseHelper helper = DatabaseHelper();
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final AudioPlayer sfxPlayer = AudioPlayer();
 final AudioPlayer screamPlayer = AudioPlayer();
@@ -150,7 +151,6 @@ class GameState extends ChangeNotifier {
         currentTime = MARATHON_MODE_TIME;
 
         //Obtenemos la lista de palabras de la BD que aun no existe. Usamos estas de prueba
-        words = List.of(["Tomate", "Casa", "Almendra", "Casita", "Mesa", "Esporas", "Galleta", "Queso", "Pimienta", "Pera"]);
         SetUpRound();
         setUpMatch = false;
         //Iniciar el temporizador. Cada segundo se actualizara el tiempo.
@@ -160,7 +160,6 @@ class GameState extends ChangeNotifier {
         maxRounds = NORMAL_MODE_MAX_ROUNDS;
 
         //Obtenemos la lista de palabras de la BD que aun no existe
-        words = List.of(["Tomate", "Casa", "Almendra", "Casita", "Mesa", "Esporas", "Galleta", "Queso", "Pimienta", "Pera"]);
         SetUpRound();
         setUpMatch = false;
       }
