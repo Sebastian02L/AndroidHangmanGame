@@ -1,5 +1,6 @@
 import 'package:dadm_practica2/MainMenuScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'main.dart';
 
@@ -34,7 +35,7 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
           //GIF BACKGROUND
           Positioned.fill(
             child: Image.asset(
-              'assets/Gifs/HungManBackground01.gif',
+              'assets/Gifs/VideoLetras4.gif',
               fit: BoxFit.cover,
             ),
           ),
@@ -46,38 +47,40 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
                   child: Center(
                     child : Padding(
                       padding: EdgeInsets.fromLTRB(0,screenHeight*0.05,0,0),
-                    child: Stack(
-
-                      alignment: Alignment.topCenter,
-                      children: [
-                        Text(
-                          'RANKINg',
-                          style: TextStyle(
-                            fontSize: 40,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 6
-                              ..color = Colors.blue[700]!,
+                      //alignment: Alignment.topCenter,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                           Text(
+                            'RANKINg',
+                            style: GoogleFonts.permanentMarker(fontSize: 40),
                           ),
-                        ),
-                        Text(
-                          'RANKINg',
-                          style: TextStyle(
-                            fontSize: 40,
-                            color: Colors.grey[300],
-                          ),
-                        ),
+                           Icon(
+                              Icons.emoji_events_outlined,
+                              color: Colors.black,
+                              size: 40.0,
+                            ),
                       ],
                     ),
                   ),
-                  ),
                 ),
-                const SizedBox(height: 5),
+                ),
+
+                const SizedBox(height: 30),
 
                 Container(
                   width: screenWidth * 0.4,
-                  height: screenHeight * 0.5,
-                  decoration: BoxDecoration(color: Colors.blue),
+                  height: screenHeight * 0.7,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    // linea del borde del box
+                    /*border: Border.all(
+                      width: 8,
+                      color: Colors.black,
+                    ),*/
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -97,7 +100,11 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
                               title: Text(
                                 //pair = texto donde se guarde el ranking
                                 // pair,
-                                'aaaa - 0'
+                                'aaaa - 0',
+                                  style: GoogleFonts.permanentMarker
+                                    (fontSize: 40,
+                                    color: Colors.black,
+                                  )
                               ),
                             );
                             },
@@ -122,7 +129,12 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
                   MaterialPageRoute(builder: (context) => const MenuPrincipal()), // Asegúrate de tener este widget definido
                 );
               },
-              child: const Text('Menú Principal'), // Texto del botón
+              child: Text(
+                  '<',
+                  style: GoogleFonts.permanentMarker
+                    (fontSize: 40, color: Colors.black,
+                  )
+              ), // Texto del botón
             ),
           ),
         ],

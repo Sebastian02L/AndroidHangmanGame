@@ -70,7 +70,7 @@ class _MenuPrincipalState extends State<MenuPrincipal>
                   padding: EdgeInsets.fromLTRB(screenWidth*0.03, screenHeight*0.05 ,screenWidth*0.03 ,0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: Colors.white,
                       // linea del borde del box
                       border: Border.all(
                         width: 8,
