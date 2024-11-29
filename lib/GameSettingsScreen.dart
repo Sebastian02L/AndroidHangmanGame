@@ -33,7 +33,8 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
       "Colores",
       "Deportes",
       "Profesiones",
-      "Países"
+      "Países",
+      "Todas"
     ];
 
     var appState = context.watch<GameState>();
@@ -42,6 +43,7 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
       body: SafeArea(
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -83,6 +85,29 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    buildSectionTitle(theme, "Nombre del jugador"),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: TextField(
+                        controller: playerNameController,
+                        decoration: InputDecoration(
+                          labelText: "Nombre del jugador",
+                          hintText: "Ingrese su nombre...",
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     buildSectionTitle(theme, "Categoría de las palabras"),
                     DropdownButton(
                       value: selectedCategory,
@@ -94,12 +119,12 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                           child: Text(value, style: TextStyle(fontSize: 20)),
                         );
                       }).toList(),
-                      onChanged: (String? newValue) {
+                      onChanged: selectedMode != "Marathon"? (String? newValue) {
                         setState(() {
                           selectedCategory = newValue;
                           changeWords(selectedCategory, appState);
                         });
-                      },
+                      } : null,
                     ),
                   ],
                 ),
@@ -134,6 +159,8 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                             PlayAudio("Click.mp3", 0);
                             setState(() {
                               selectedMode = "Marathon";
+                              selectedCategory = "Todas";
+                              changeWords(selectedCategory, appState);
                             });
                           },
                           "Marathon",
@@ -145,29 +172,6 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                 ),
               ),
               SizedBox(height: 10),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.2,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    buildSectionTitle(theme, "Nombre del jugador"),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      child: TextField(
-                        controller: playerNameController,
-                        decoration: InputDecoration(
-                          labelText: "Nombre del jugador",
-                          hintText: "Ingrese su nombre...",
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.2,
                 child: Center(
@@ -245,6 +249,9 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
 }
 
 void changeWords(String? category, GameState state) async{
-  state.words = await helper.getWords();
-  print(await helper.getWordsByCategory(category.toString()));
+  if (category == "Todas") {
+    state.words = await helper.getWords();
+  }else{
+    state.words = await helper.getWordsByCategory(category);
+  }
 }
