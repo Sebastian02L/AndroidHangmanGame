@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sqflite/sqflite.dart';
 
 import 'GameScreen.dart';
 import 'main.dart';
@@ -96,6 +97,7 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                       onChanged: (String? newValue) {
                         setState(() {
                           selectedCategory = newValue;
+                          changeWords(selectedCategory, appState);
                         });
                       },
                     ),
@@ -240,4 +242,9 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
       ),
     );
   }
+}
+
+void changeWords(String? category, GameState state) async{
+  state.words = await helper.getWords();
+  print(await helper.getWordsByCategory(category.toString()));
 }
