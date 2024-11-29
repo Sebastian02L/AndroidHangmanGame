@@ -38,7 +38,7 @@ class DatabaseHelper {
   }
 
   // Método para insertar palabras con categoría
-  Future<int> insertWord(String word, String category) async {
+  Future<int> insertWord(String? word, String? category) async {
     final db = await database;
     return await db.insert('words', {
       'word': word,
@@ -50,27 +50,25 @@ class DatabaseHelper {
   Future<List<String>> getWords() async {
     final db = await database;
     final result = await db.query('words',orderBy: 'RANDOM()');
+
     List<String> words = result.map((row) => row['word'] as String).toList(); // Se convierte en una lista de strings
     return words;
   }
 
-  Future<List<String>> getWordsByCategory(String category) async{
+  Future<List<String>> getWordsByCategory(String? categoria) async{
     final db = await database;
-    final result = await db.query(
-      'words',
-      columns: ['word'],  // Solo seleccionamos la columna 'palabra'
-      where: 'category = ?', // Filtro por la categoría
-      whereArgs: [category], // El valor de la categoría a buscar
-      orderBy: 'RANDOM()', // Se aleatoriza el orden de las palabras de la categoría
-      limit: 10,
+    String? queryCategory = "%$categoria%";
+    final result = await db.rawQuery(
+        "SELECT word FROM words WHERE category like ? ORDER BY RANDOM() LIMIT 10",
+        [queryCategory]
     );
 
     List<String> words = result.map((row) => row['word'] as String).toList(); // Se convierte en una lista de strings
     return words;
   }
 
-  //Método para
-  Future<bool> checkIfWordExists(String palabra) async {
+  //Método para comprobar si se han añadido nuevas palabras al csv
+  Future<bool> checkIfWordExists(String? palabra) async {
     final db = await _instance.database;
     final result = await db.query(
       'words',
