@@ -27,8 +27,26 @@ class ResultUI extends StatelessWidget {
                   ResultCard(text: "Palabras adivinadas:", value: appState.currentRound - 1),
                   ResultCard(text: "Número de fallos:", value: appState.totalErrors),
                   ResultCard(text: "Racha de aciertos más larga:", value: appState.highestStreak),
-                  NavButton(state: appState, route: GameUI(), text: "VOLVER A JUGAR"),
-                  NavButton(state: appState, route: MenuPrincipal(), text: "VOLVER AL MENÚ"),
+                  GenericButton(buttonName: "VOLVER A JUGAR", widthFactor: 0.9, heightFactor: 0.1,
+                    onPressed: () {
+                      PlayAudio("Click.mp3", 0);
+                      appState.ResetGameplayValues();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const GameUI()),
+                      );
+                    },
+                  ),
+                  GenericButton(buttonName: "VOLVER AL MENÚ", widthFactor: 0.9, heightFactor: 0.1,
+                    onPressed: () {
+                      PlayAudio("Click.mp3", 0);
+                      appState.ResetGameplayValues();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const MenuPrincipal()),
+                      );
+                    },
+                  ),
                   SizedBox(height: 40)
                 ],
               )
@@ -65,32 +83,6 @@ class ResultCard extends StatelessWidget{
             ],
           ),
         )
-    );
-  }
-}
-
-class NavButton extends StatelessWidget{
-  final GameState state;
-  final Widget route;
-  final String text;
-  const NavButton({super.key, required this.state, required this.route, required this.text});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: MediaQuery.of(context).size.height * 0.1,
-      child: ElevatedButton(
-        onPressed: () {
-          PlayAudio("Click.mp3", 0);
-          state.ResetGameplayValues();
-          Navigator.push(context,
-            MaterialPageRoute(builder: (context) => route),
-          );
-        },
-        child: Text(text, style: GoogleFonts.permanentMarker
-          (fontSize: 30, color: Colors.black,
-        )),
-      ),
     );
   }
 }

@@ -309,7 +309,6 @@ class GameState extends ChangeNotifier {
     totalErrors = 0;
     currentRound = 1;
     maxRounds = "";
-    marathonMode = false;
     setUpMatch = true;
     canUseKeyboard = false;
     currentWord = "";
