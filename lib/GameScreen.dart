@@ -4,22 +4,31 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'main.dart';
 
+import 'package:google_fonts/google_fonts.dart';
+
 //Widget que contiene toda la interfaz de la pantalla de juego
 class GameUI extends StatelessWidget {
   const GameUI({super.key});
+
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<GameState>();
-    if(appState.setUpMatch){
+    if (appState.setUpMatch) {
       appState.SetUpGame();
       var accelerometerHandler = AccelerometerHandler(
         shakeThreshold: 15.0,
         onShake: () {
-          if(appState.canShake) {
+          if (appState.canShake) {
             appState.canShake = false;
             appState.IsCharacterCorrect('_');
-            appState.warningText = "¡CUIDADO! Si agitas demasiado el móvil maltratarás a Miguel.";
-            Timer(Duration(milliseconds: 3000), () {appState.canShake = true; appState.warningText = ""; appState.UpdateUI();});        }
+            appState.warningText =
+                "¡CUIDADO! Si agitas demasiado el móvil maltratarás a Miguel.";
+            Timer(Duration(milliseconds: 3000), () {
+              appState.canShake = true;
+              appState.warningText = "";
+              appState.UpdateUI();
+            });
+          }
         },
       );
       accelerometerHandler.startListening();
@@ -27,102 +36,113 @@ class GameUI extends StatelessWidget {
 
     return WillPopScope(
         onWillPop: () async {
-      return false;
-    },
-    child: Scaffold(
-        body: Container( //Lo encerramos todo en un container para poner un padding superior
-          padding: EdgeInsets.only(top: 25),
-          child: Center( //Todos los elementos de la UI estarán centrados en la pantalla
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  //Parte superior de la interfaz, las cards de puntuacion, numero de rondas, tiempo y los textos
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+          return false;
+        },
+        child: Scaffold(
+            body: Container(
+                //Lo encerramos todo en un container para poner un padding superior
+                padding: EdgeInsets.only(top: 25),
+                child: Center(
+                  //Todos los elementos de la UI estarán centrados en la pantalla
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      //Textos superiores
-                      Flexible( //Flexible permite que el widget sea responsivo, indicando en flex cuanto tiene que ocupar
-                          flex: 3,
-                          child: TextCard(text: "Ronda"),
+                      //Parte superior de la interfaz, las cards de puntuacion, numero de rondas, tiempo y los textos
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          //Textos superiores
+                          Flexible(
+                            //Flexible permite que el widget sea responsivo, indicando en flex cuanto tiene que ocupar
+                            flex: 3,
+                            child: TextCard(text: "Ronda"),
+                          ),
+                          Flexible(
+                              flex: 2,
+                              child: SizedBox(
+                                  child: Padding(padding: EdgeInsets.all(1)))),
+                          Flexible(
+                            flex: 6,
+                            child: TextCard(text: "Puntos"),
+                          ),
+                          Flexible(
+                              flex: 2,
+                              child: SizedBox(
+                                  child: Padding(padding: EdgeInsets.all(1)))),
+                          Flexible(
+                            flex: 3,
+                            child: TextCard(text: "Tiempo"),
+                          )
+                        ],
                       ),
-                      Flexible(
-                          flex: 2,
-                          child: SizedBox(child: Padding(padding: EdgeInsets.all(1)))
+                      // Cards superiores
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                              //Flexible permite que el widget sea responsivo, indicando en flex cuanto tiene que ocupar
+                              flex: 3,
+                              child: WordsCounter(
+                                  counter: appState.currentRound,
+                                  totalWords: appState.maxRounds)),
+                          Flexible(
+                              flex: 2,
+                              child: SizedBox(
+                                  child: Padding(padding: EdgeInsets.all(1)))),
+                          Flexible(
+                              flex: 6,
+                              child: PuntuationCard(
+                                  puntuation: appState.puntuation)),
+                          Flexible(
+                              flex: 2,
+                              child: SizedBox(
+                                  child: Padding(padding: EdgeInsets.all(1)))),
+                          Flexible(
+                              flex: 3,
+                              child: TimeCard(
+                                time: appState.currentTime,
+                                isMarathon: appState.marathonMode,
+                              ))
+                        ],
                       ),
-                      Flexible(
-                          flex: 6,
-                        child: TextCard(text: "Puntos"),
-                      ),
-                      Flexible(
-                          flex: 2,
-                          child: SizedBox(child: Padding(padding: EdgeInsets.all(1)))),
-                      Flexible(
-                          flex: 3,
-                        child: TextCard(text: "Tiempo"),
-                      )
+                      SizedBox(height: 10),
+                      //Zona donde aparece el muñeco
+                      Flexible(flex: 2, child: GamePlaceHolder()),
+                      SizedBox(height: 1),
+                      //Caja donde se intenta adivinar la palabra
+                      Flexible(flex: 1, child: WordBox()),
+                      Flexible(flex: 1, child: Keyboard())
                     ],
                   ),
-                  // Cards superiores
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible( //Flexible permite que el widget sea responsivo, indicando en flex cuanto tiene que ocupar
-                          flex: 3,
-                          child: WordsCounter(counter: appState.currentRound,totalWords: appState.maxRounds)),
-                      Flexible(
-                          flex: 2,
-                          child: SizedBox(child: Padding(padding: EdgeInsets.all(1)))),
-                      Flexible(
-                          flex: 6,
-                          child: PuntuationCard(puntuation: appState.puntuation)),
-                      Flexible(
-                          flex: 2,
-                          child: SizedBox(child: Padding(padding: EdgeInsets.all(1)))),
-                      Flexible(
-                          flex: 3,
-                          child: TimeCard(time: appState.currentTime, isMarathon: appState.marathonMode,))
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  //Zona donde aparece el muñeco
-                  Flexible(
-                      flex : 2,
-                      child: GamePlaceHolder()
-                  ),
-                  SizedBox(height: 1),
-                  //Caja donde se intenta adivinar la palabra
-                  Flexible(
-                      flex : 1,
-                      child: WordBox()
-                  ),
-                  Flexible(
-                      flex: 1,
-                      child: Keyboard()
-                  )
-                ],
-            ),
-          )
-        )
-      )
-    );
+                ))));
   }
 }
 
 //Widget para colocar el texto que va encima de los cards de la sona superior de la interfaz
-class TextCard extends StatelessWidget{
+class TextCard extends StatelessWidget {
   final String text;
+
   const TextCard({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5)
+        borderRadius: BorderRadius.circular(5),
+        side: BorderSide(
+          color: Colors.black, // Borde negro
+          width: 3.0, // Grosor del borde
+        ),
       ),
-      child: SizedBox( //El child box creara un padding alrededor del texto
+      child: SizedBox(
         height: 20,
         child: Center(
-          child: Text("$text"),
+          child: Text(
+            "$text",
+            style: GoogleFonts.permanentMarker(
+              color: Colors.black, // Color de texto negro
+            ),
+          ),
         ),
       ),
     );
@@ -130,21 +150,30 @@ class TextCard extends StatelessWidget{
 }
 
 //Widget para crear la card de la puntuacion
-class PuntuationCard extends StatelessWidget{
-
+class PuntuationCard extends StatelessWidget {
   final int puntuation;
+
   const PuntuationCard({super.key, required this.puntuation});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5)
+        borderRadius: BorderRadius.circular(5),
+        side: BorderSide(
+          color: Colors.black,
+          width: 5.0,
+        ),
       ),
-      child: SizedBox( //El child box creara un padding alrededor del texto
+      child: SizedBox(
         height: 50,
         child: Center(
-          child: Text("$puntuation"),
+          child: Text(
+            "$puntuation",
+            style: GoogleFonts.permanentMarker(
+              color: Colors.black, // Color de texto negro
+            ),
+          ),
         ),
       ),
     );
@@ -152,22 +181,39 @@ class PuntuationCard extends StatelessWidget{
 }
 
 //Widget para crear la card del tiempo
-class TimeCard extends StatelessWidget{
-
+class TimeCard extends StatelessWidget {
   final int time;
   final bool isMarathon;
+
   const TimeCard({super.key, required this.time, required this.isMarathon});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5)
+        borderRadius: BorderRadius.circular(5),
+        side: BorderSide(
+          color: Colors.black,
+          width: 5.0,
+        ),
       ),
-      child: SizedBox( //El child box creara un padding alrededor del texto
+      child: SizedBox(
         height: 50,
         child: Center(
-          child: (!isMarathon)? Text("∞") : Text("$time"),
+          child: (!isMarathon)
+              ? Text(
+            "∞",
+            style: GoogleFonts.permanentMarker(
+              color: Colors.black,
+              fontSize: 35,// Color de texto negro
+            ),
+          )
+              : Text(
+            "$time",
+            style: GoogleFonts.permanentMarker(
+              color: Colors.black, // Color de texto negro
+            ),
+          ),
         ),
       ),
     );
@@ -175,22 +221,31 @@ class TimeCard extends StatelessWidget{
 }
 
 //Widget que crea el cartel donde se muestra el contador de palabras y las palabras que faltan
-class WordsCounter extends StatelessWidget{
-
+class WordsCounter extends StatelessWidget {
   final int counter;
   String totalWords;
+
   WordsCounter({super.key, required this.counter, required this.totalWords});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5)
+        borderRadius: BorderRadius.circular(5),
+        side: BorderSide(
+          color: Colors.black,
+          width: 5.0,
+        ),
       ),
-      child: SizedBox( //El child box creara un padding alrededor del texto
+      child: SizedBox(
         height: 50,
         child: Center(
-          child: Text("$counter / $totalWords"),
+          child: Text(
+            "$counter/$totalWords",
+            style: GoogleFonts.permanentMarker(
+              color: Colors.black, // Color de texto negro
+            ),
+          ),
         ),
       ),
     );
@@ -207,33 +262,31 @@ class GamePlaceHolder extends StatelessWidget {
 
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.36,
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: Center(
-                  child: appState.GetImage(),
-                ),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.36,
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: Center(
+                child: appState.GetImage(),
               ),
             ),
-            Center(child: Text(
-                appState.warningText,
-                style: TextStyle(
-                  color: Colors.red, // Cambia el color del texto a rojo
-                  fontSize: 16, // Ajusta el tamaño de la fuente si es necesario
-                ),
-                textAlign: TextAlign.center, // Centra el texto dentro de la línea))
-            ))]
-        )
-    );
+          ),
+          Center(
+              child: Text(
+            appState.warningText,
+            style: TextStyle(
+              color: Colors.red, // Cambia el color del texto a rojo
+              fontSize: 16, // Ajusta el tamaño de la fuente si es necesario
+            ),
+            textAlign: TextAlign.center, // Centra el texto dentro de la línea))
+          ))
+        ]));
   }
 }
 
 //Widget para gestionar la palabra a adivinar
-class WordBox extends StatelessWidget{
+class WordBox extends StatelessWidget {
   WordBox({super.key});
 
   @override
@@ -241,24 +294,32 @@ class WordBox extends StatelessWidget{
     var appState = context.watch<GameState>();
 
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30.0),
-        child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                child: SizedBox(
-                  height: 50,
-                  width: 500,
-                  child: Center(
-                    child: Text(appState.hiddenWord, style: TextStyle(letterSpacing: 2.0),)
-                  )
-                )
-        )
+      padding: EdgeInsets.symmetric(horizontal: 30.0),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+          side: BorderSide(
+            color: Colors.black,
+            width: 7.0,
+          ),
+        ),
+        child: SizedBox(
+          height: 50,
+          width: 500,
+          child: Center(
+            child: Text(
+              appState.hiddenWord,
+              style: TextStyle(letterSpacing: 7.0),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
 
 //Widget para crear los botones del teclado
-class KeyboardButton extends StatelessWidget{
+class KeyboardButton extends StatelessWidget {
   final String letter;
   bool? characterState;
 
@@ -267,38 +328,54 @@ class KeyboardButton extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<GameState>();
-    bool? characterState = appState.CheckButtonStatus(letter.toLowerCase()); //Comprueba el estado del boton para determinar luego el color del boton
+    bool? characterState = appState.CheckButtonStatus(letter
+        .toLowerCase()); //Comprueba el estado del boton para determinar el color del boton
 
     return Flexible(
       flex: 1,
-      child: Padding(padding: EdgeInsets.all(2),
+      child: Padding(
+        padding: EdgeInsets.all(2),
         child: TextButton(
           style: TextButton.styleFrom(
-            backgroundColor: characterState == null? Colors.grey : characterState == true? Colors.green : Colors.red
+            backgroundColor: characterState == null
+                ? Colors.grey
+                : characterState == true
+                ? Colors.green
+                : Colors.red,
+            // Aumentamos el tamaño de la caja de la tecla
+            minimumSize: Size(double.infinity, 40), // Aumenta la altura de las teclas
           ),
-          onPressed: (){
-            if(appState.canUseKeyboard && characterState == null){
+          onPressed: () {
+            if (appState.canUseKeyboard && characterState == null) {
               appState.IsCharacterCorrect(letter.toLowerCase());
             } else {
-              print("teclado desactivado hasta que inicie la siguiente ronda o tecla ya usada");
+              print(
+                  "teclado desactivado hasta que inicie la siguiente ronda o tecla ya usada");
             }
-
-            //characterState = appState.CheckButtonStatus(letter.toLowerCase());
-            },
-          child: Center(child: Text(letter)),
+          },
+          child: Center(
+            child: Text(
+              letter,
+              style: GoogleFonts.permanentMarker(
+                color: Colors.black, // Color del texto de la tecla
+                fontSize: 18, // Tamaño de la fuente
+              ),
+            ),
+          ),
         ),
-      )
+      ),
     );
   }
 }
 
 //Widget que crea los botones del teclado
-class Keyboard extends StatelessWidget{
+class Keyboard extends StatelessWidget {
   Keyboard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [

@@ -205,14 +205,14 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                       value: selectedCategory,
                       hint: Text(
                         "Seleccione una categoría...",
-                        style: GoogleFonts.permanentMarker(fontSize: 15, color: Colors.black),
+                        style: GoogleFonts.permanentMarker(fontSize: 15),
                       ),
                       items: options.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(
                             value,
-                            style: GoogleFonts.permanentMarker(fontSize: 20, color: Colors.black),
+                            style: GoogleFonts.permanentMarker(fontSize: 20),
                           ),
                         );
                       }).toList(),

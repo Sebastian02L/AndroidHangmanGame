@@ -105,7 +105,7 @@ class DatabaseHelper {
 
   Future<List<Map<String, dynamic>>> getTop3Ranking() async {
     final db = await database;
-    final result = await db.rawQuery("SELECT name, points FROM ranking ORDER BY points DESC LIMIT 5");
+    final result = await db.rawQuery("SELECT name, points FROM ranking ORDER BY points DESC LIMIT 3");
     return result.map((row) => {"name": row["name"],"points": row["points"]}).toList();
   }
 

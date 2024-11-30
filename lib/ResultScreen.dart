@@ -57,33 +57,45 @@ class ResultUI extends StatelessWidget {
   }
 }
 
-class ResultCard extends StatelessWidget{
-
+class ResultCard extends StatelessWidget {
   final int value;
   final String text;
+
   const ResultCard({super.key, required this.text, required this.value});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-        shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5)
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5), // Bordes redondeados
+        side: BorderSide(
+          color: Colors.black, // Borde negro
+          width: 6.0, // Grosor del borde
         ),
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.15,
-          width: MediaQuery.of(context).size.width * 0.9,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("$text", style: GoogleFonts.permanentMarker
-            (fontSize: 20, color: Colors.black,
-          )),
-              Text("$value", style: GoogleFonts.permanentMarker
-                (fontSize: 35, color: Colors.black,
-              ))
-            ],
-          ),
-        )
+      ),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.15,
+        width: MediaQuery.of(context).size.width * 0.9,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "$text",
+              style: GoogleFonts.permanentMarker(
+                fontSize: 20,
+                color: Colors.black,
+              ),
+            ),
+            Text(
+              "$value",
+              style: GoogleFonts.permanentMarker(
+                fontSize: 35,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
