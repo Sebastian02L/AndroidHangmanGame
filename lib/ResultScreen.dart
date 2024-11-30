@@ -1,3 +1,4 @@
+import 'package:dadm_practica2/GameSettingsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +34,7 @@ class ResultUI extends StatelessWidget {
                       appState.ResetGameplayValues();
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const GameUI()),
+                        MaterialPageRoute(builder: (context) => const GameSettingsUI()),
                       );
                     },
                   ),
