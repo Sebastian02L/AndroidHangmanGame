@@ -65,6 +65,7 @@ class _MenuPrincipalState extends State<MenuPrincipal>
                 fit: BoxFit.cover, // Para que ocupe toda la pantalla
               ),
             ),
+<<<<<<< Updated upstream
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -227,6 +228,99 @@ class _MenuPrincipalState extends State<MenuPrincipal>
                   //////////////////////////////////////////////
                   const SizedBox(height: 20),
 
+=======
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                // CAJA Y TITULO
+                Padding(
+                  padding: EdgeInsets.fromLTRB(screenWidth*0.03, screenHeight*0.05 ,screenWidth*0.03 ,0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      // linea del borde del box
+                      border: Border.all(
+                        width: 8,
+                        color: Colors.black,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            'HANGMAN',
+                            style: GoogleFonts.permanentMarker(fontSize: 40),
+                            /*TextStyle(
+                              fontSize: 40,
+                            ),*/
+                          ),
+
+                          //ROW para que sea icono texto icono
+                          Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Image.asset(
+                              'assets/Images/skull.png',
+                              height: 40,
+                              width: 40,
+                              //'assets/Images/image1.png',
+                            ),
+                            Text(
+                              'GAME',
+                              style: GoogleFonts.permanentMarker(fontSize: 40),
+                            ),
+                            Image.asset(
+                              'assets/Images/skull.png',
+                              height: 40,
+                              width: 40,
+                            ),
+                            ]
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                //////////////////////////////////////////////
+                // ESPACIADO
+                const SizedBox(height: 20),
+                // BOTON JUGAR
+                GenericButton(
+                  buttonName: 'JUGAR',
+                  widthFactor: 0.6,
+                  heightFactor: 0.1,
+                  onPressed: () {
+                    PlayAudio("Click.mp3", 0);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const GameSettingsUI()),
+                    );
+                  },
+                ),
+                // ESPACIADO
+                const SizedBox(height: 20),
+                // BOTON RANKING
+                GenericButton(
+                  buttonName: 'RANKING',
+                  widthFactor: 0.5,
+                  heightFactor: 0.1,
+                  onPressed: () {
+                    PlayAudio("Click.mp3", 0);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Ranking()),
+                    );
+                  },
+                ),
+                // ESPACIADO
+                const SizedBox(height: 20),
+                // BOTON SALIR
+                if (!kIsWeb) //si no es ejecutado en web
+>>>>>>> Stashed changes
                   GenericButton(
                     buttonName: 'JUGAR',
                     widthFactor: 0.9,
@@ -239,6 +333,7 @@ class _MenuPrincipalState extends State<MenuPrincipal>
                       );
                     },
                   ),
+<<<<<<< Updated upstream
                   const SizedBox(height: 20),
                   GenericButton(
                     buttonName: 'RANKING',
@@ -251,6 +346,17 @@ class _MenuPrincipalState extends State<MenuPrincipal>
                         MaterialPageRoute(builder: (context) => const Ranking()),
                       );
                     },
+=======
+
+                //IMAGEN CALAVERA
+                const SizedBox(height: 10),
+                Container(
+                  child: Image.asset(
+                    'assets/Images/skull.png',
+                    height: screenHeight*0.3,
+                    width: screenWidth*0.3,
+                    //'assets/Images/image1.png',
+>>>>>>> Stashed changes
                   ),
                   const SizedBox(height: 20),
                   if (!kIsWeb)
