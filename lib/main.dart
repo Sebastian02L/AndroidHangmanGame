@@ -42,8 +42,13 @@ void main() async{
 
   PlayMusic("MainMusic.mp3");
 
-  // Ahora ejecuta la aplicación después de haber cargado los datos.
-  runApp(const MyApp());
+  //Después de haber cargado los datos, indicamos la orientacion deseada y iniciamos la app
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((_) {
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {

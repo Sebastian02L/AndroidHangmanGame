@@ -48,7 +48,7 @@ class GameUI extends StatelessWidget {
                       ),
                       Flexible(
                           flex: 2,
-                          child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))
+                          child: SizedBox(child: Padding(padding: EdgeInsets.all(1)))
                       ),
                       Flexible(
                           flex: 6,
@@ -56,7 +56,7 @@ class GameUI extends StatelessWidget {
                       ),
                       Flexible(
                           flex: 2,
-                          child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))),
+                          child: SizedBox(child: Padding(padding: EdgeInsets.all(1)))),
                       Flexible(
                           flex: 3,
                         child: TextCard(text: "Tiempo"),
@@ -72,13 +72,13 @@ class GameUI extends StatelessWidget {
                           child: WordsCounter(counter: appState.currentRound,totalWords: appState.maxRounds)),
                       Flexible(
                           flex: 2,
-                          child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))),
+                          child: SizedBox(child: Padding(padding: EdgeInsets.all(1)))),
                       Flexible(
                           flex: 6,
                           child: PuntuationCard(puntuation: appState.puntuation)),
                       Flexible(
                           flex: 2,
-                          child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))),
+                          child: SizedBox(child: Padding(padding: EdgeInsets.all(1)))),
                       Flexible(
                           flex: 3,
                           child: TimeCard(time: appState.currentTime, isMarathon: appState.marathonMode,))
@@ -212,7 +212,7 @@ class GamePlaceHolder extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.3,
+              height: MediaQuery.of(context).size.height * 0.36,
               child: AspectRatio(
                 aspectRatio: 1,
                 child: Center(
@@ -301,7 +301,7 @@ class Keyboard extends StatelessWidget{
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 10),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Row(
             children: [
