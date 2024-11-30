@@ -39,7 +39,7 @@ void main() async{
   } catch (e) {
     print("Error al cargar los datos: $e");
   }
-
+  getTop3(); //Se carga el ránking
   PlayMusic("MainMusic.mp3");
 
   //Después de haber cargado los datos, indicamos la orientacion deseada y iniciamos la app
@@ -324,6 +324,8 @@ class GameState extends ChangeNotifier {
   void FinishMatch(){
     canUseKeyboard = false;
     print("Ha terminado la partida");
+    helper.insertRanking(playerName, puntuation);
+    getTop3(); //Llama a la función de la pestaña de ránking para que actualice ya el top3
     Timer(Duration(milliseconds: 1000), () {GoToResults();});
   }
 

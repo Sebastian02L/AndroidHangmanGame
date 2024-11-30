@@ -39,7 +39,7 @@ class DatabaseHelper {
       CREATE TABLE ranking(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
-        points TEXT NOT NULL
+        points INTEGER NOT NULL
       )
     ''');
   }
@@ -95,7 +95,7 @@ class DatabaseHelper {
 //QUERIES DE LA TABLA RANKING
 /////////////////////////////
 
-  Future<int> insertRanking(String? name, String? points) async {
+  Future<int> insertRanking(String? name, int points) async {
     final db = await database;
     return await db.insert('ranking', {
       'name': name,
@@ -105,7 +105,7 @@ class DatabaseHelper {
 
   Future<List<Map<String, dynamic>>> getTop3Ranking() async {
     final db = await database;
-    final result = await db.rawQuery("SELECT name, points FROM ranking ORDER BY points DESC LIMIT 3");
+    final result = await db.rawQuery("SELECT name, points FROM ranking ORDER BY points DESC LIMIT 5");
     return result.map((row) => {"name": row["name"],"points": row["points"]}).toList();
   }
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'RankingScreen.dart';
 import 'main.dart';
 import 'GameScreen.dart';
 import 'MainMenuScreen.dart';
@@ -11,7 +13,6 @@ class ResultUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<GameState>();
-
     return WillPopScope(
         onWillPop: () async {
           return false;
@@ -19,13 +20,16 @@ class ResultUI extends StatelessWidget {
         child: Scaffold(
           body: Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  SizedBox(height: 20),
+                  ResultCard(text: "Puntos:", value: appState.puntuation),
                   ResultCard(text: "Palabras adivinadas:", value: appState.currentRound - 1),
                   ResultCard(text: "Número de fallos:", value: appState.totalErrors),
-                  ResultCard(text: "Racha de letras acertadas más larga:", value: appState.highestStreak),
+                  ResultCard(text: "Racha de aciertos más larga:", value: appState.highestStreak),
                   NavButton(state: appState, route: GameUI(), text: "VOLVER A JUGAR"),
                   NavButton(state: appState, route: MenuPrincipal(), text: "VOLVER AL MENÚ"),
+                  SizedBox(height: 40)
                 ],
               )
           )
@@ -43,7 +47,6 @@ class ResultCard extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Card(
-        margin: const EdgeInsets.symmetric(vertical: 16.0),
         shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5)
         ),
@@ -53,8 +56,12 @@ class ResultCard extends StatelessWidget{
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("$text"),
-              Text("$value")
+              Text("$text", style: GoogleFonts.permanentMarker
+            (fontSize: 20, color: Colors.black,
+          )),
+              Text("$value", style: GoogleFonts.permanentMarker
+                (fontSize: 35, color: Colors.black,
+              ))
             ],
           ),
         )
@@ -70,9 +77,8 @@ class NavButton extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 16.0),
       width: MediaQuery.of(context).size.width * 0.9,
-      height: MediaQuery.of(context).size.height * 0.15,
+      height: MediaQuery.of(context).size.height * 0.1,
       child: ElevatedButton(
         onPressed: () {
           PlayAudio("Click.mp3", 0);
@@ -81,7 +87,9 @@ class NavButton extends StatelessWidget{
             MaterialPageRoute(builder: (context) => route),
           );
         },
-        child: Text(text),
+        child: Text(text, style: GoogleFonts.permanentMarker
+          (fontSize: 30, color: Colors.black,
+        )),
       ),
     );
   }

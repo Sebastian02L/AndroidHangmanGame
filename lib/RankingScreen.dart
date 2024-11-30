@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'main.dart';
 
+List<Map<String,dynamic>>? top3;
+
 class Ranking extends StatefulWidget {
   const Ranking({Key? key}) : super(key: key);
 
@@ -26,7 +28,6 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
-
 
     return Scaffold(
 
@@ -97,14 +98,17 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
                             //buscar en el documento donde se guarden las mejores puntuaciones
                             //var pair = appState.favorites[index];
                             return ListTile(
-                              title: Text(
-                                //pair = texto donde se guarde el ranking
-                                // pair,
-                                'aaaa - 0',
-                                  style: GoogleFonts.permanentMarker
-                                    (fontSize: 30,
-                                    color: Colors.black,
-                                  )
+                              title: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  //pair = texto donde se guarde el ranking
+                                  // pair,
+                                  getPosition(index),
+                                    style: GoogleFonts.permanentMarker
+                                      (fontSize: 30,
+                                      color: Colors.black,
+                                    )
+                                ),
                               ),
                             );
                             },
@@ -141,4 +145,20 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
       ),
     );
   }
+}
+
+String getPosition(int index){
+  if(index >= top3!.length){
+    return "Sin datos almacenados.";
+  }
+  else{
+    var name = top3?[index]["name"];
+    if(name == "") name = "Desconocido";
+    var points = "${top3![index]["points"]}pts";
+    return (name + " - " + points);
+  }
+}
+
+void getTop3() async{ //Se llama desde la pantalla de resultados, según se actualiza la tabla, para que ya esté cargado el ránking al abrir esta pestaña
+  top3 = await helper.getTop3Ranking();
 }
