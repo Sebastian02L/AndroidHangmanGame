@@ -35,7 +35,18 @@ class DatabaseHelper {
         category TEXT NOT NULL
       )
     ''');
+    await db.execute('''
+      CREATE TABLE ranking(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        points TEXT NOT NULL
+      )
+    ''');
   }
+
+  /////////////////////////////
+  //QUERIES DE LA TABLA WORDS
+  /////////////////////////////
 
   // Método para insertar palabras con categoría
   Future<int> insertWord(String? word, String? category) async {
@@ -79,4 +90,23 @@ class DatabaseHelper {
     // Si la longitud del resultado es mayor que 0, significa que la palabra existe
     return result.isNotEmpty;
   }
+
+/////////////////////////////
+//QUERIES DE LA TABLA RANKING
+/////////////////////////////
+
+  Future<int> insertRanking(String? name, String? points) async {
+    final db = await database;
+    return await db.insert('ranking', {
+      'name': name,
+      'points': points,
+    });
+  }
+
+  Future<List<Map<String, dynamic>>> getTop3Ranking() async {
+    final db = await database;
+    final result = await db.rawQuery("SELECT name, points FROM ranking ORDER BY points DESC LIMIT 3");
+    return result.map((row) => {"name": row["name"],"points": row["points"]}).toList();
+  }
+
 }
