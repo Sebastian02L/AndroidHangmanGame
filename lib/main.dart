@@ -45,7 +45,7 @@ void main() async{
   //Después de haber cargado los datos, indicamos la orientacion deseada y iniciamos la app
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
+    //DeviceOrientation.portraitDown,
   ]).then((_) {
     runApp(MyApp());
   });

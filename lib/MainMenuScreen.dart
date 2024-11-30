@@ -20,20 +20,21 @@ class MenuPrincipal extends StatefulWidget {
 
 class _MenuPrincipalState extends State<MenuPrincipal>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+  //late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
+    /*
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 3),
-    )..repeat();
+    )..repeat(); */
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    //_controller.dispose();
     super.dispose();
   }
 
