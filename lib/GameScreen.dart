@@ -10,21 +10,20 @@ class GameUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<GameState>();
-    var canShake = true;
-    appState.SetUpGame();
-    var accelerometerHandler = AccelerometerHandler(
-      shakeThreshold: 15.0,
-      onShake: () {
-        print("AGITADO");
-        if(appState.canShake) {
-          appState.canShake = false;
-          appState.IsCharacterCorrect('_');
-          appState.warningText = "¡CUIDADO! Si agitas demasiado el móvil maltratarás a Miguel.";
-          Timer(Duration(milliseconds: 3000), () {appState.canShake = true; appState.warningText = "";});        }
-      },
-    );
-    accelerometerHandler.startListening();
-
+    if(appState.setUpMatch){
+      appState.SetUpGame();
+      var accelerometerHandler = AccelerometerHandler(
+        shakeThreshold: 15.0,
+        onShake: () {
+          if(appState.canShake) {
+            appState.canShake = false;
+            appState.IsCharacterCorrect('_');
+            appState.warningText = "¡CUIDADO! Si agitas demasiado el móvil maltratarás a Miguel.";
+            Timer(Duration(milliseconds: 3000), () {appState.canShake = true; appState.warningText = ""; appState.UpdateUI();});        }
+        },
+      );
+      accelerometerHandler.startListening();
+    }
 
     return WillPopScope(
         onWillPop: () async {

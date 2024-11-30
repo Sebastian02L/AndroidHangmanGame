@@ -150,25 +150,20 @@ class GameState extends ChangeNotifier {
 
   //Prepara la partida con la configuracion aplicada en la pantalla de configuracion
   void SetUpGame() {
-    //Solo debe ejecutarse una vez al iniciar la partida
-    if(setUpMatch){
-      if(marathonMode){
-        maxRounds = MARATHON_MODE_MAX_ROUNDS;
-        currentTime = MARATHON_MODE_TIME;
+    if(marathonMode){
+      maxRounds = MARATHON_MODE_MAX_ROUNDS;
+      currentTime = MARATHON_MODE_TIME;
 
-        //Obtenemos la lista de palabras de la BD que aun no existe. Usamos estas de prueba
-        SetUpRound();
-        setUpMatch = false;
-        //Iniciar el temporizador. Cada segundo se actualizara el tiempo.
-        Timer.periodic(Duration(seconds: 1), (timer) {UpdateTimer(timer) ;});
-      }
-      else {
-        maxRounds = NORMAL_MODE_MAX_ROUNDS;
+      SetUpRound();
+      setUpMatch = false;
+      //Iniciar el temporizador. Cada segundo se actualizara el tiempo.
+      Timer.periodic(Duration(seconds: 1), (timer) {UpdateTimer(timer) ;});
+    }
+    else {
+      maxRounds = NORMAL_MODE_MAX_ROUNDS;
 
-        //Obtenemos la lista de palabras de la BD que aun no existe
-        SetUpRound();
-        setUpMatch = false;
-      }
+      SetUpRound();
+      setUpMatch = false;
     }
   }
 

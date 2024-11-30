@@ -121,7 +121,7 @@ class _MenuPrincipalState extends State<MenuPrincipal>
         // Botón JUGAR
         GenericButton(
           buttonName: 'JUGAR',
-          widthFactor: 0.6,
+          widthFactor: 0.9,
           heightFactor: 0.1,
           onPressed: () {
             PlayAudio("Click.mp3", 0);
@@ -135,7 +135,7 @@ class _MenuPrincipalState extends State<MenuPrincipal>
         // Botón RANKING
         GenericButton(
           buttonName: 'RANKING',
-          widthFactor: 0.5,
+          widthFactor: 0.9,
           heightFactor: 0.1,
           onPressed: () {
             PlayAudio("Click.mp3", 0);

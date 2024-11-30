@@ -52,7 +52,7 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
                         mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                            Text(
-                            'RANKINg',
+                            'RANKING',
                             style: GoogleFonts.permanentMarker(fontSize: 40),
                           ),
                            Icon(
