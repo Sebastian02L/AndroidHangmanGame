@@ -51,243 +51,248 @@ class _MenuPrincipalState extends State<MenuPrincipal>
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          // GIF de fondo de pantalla
-          Positioned.fill(
-            child: Image.asset(
-              'assets/Gifs/VideoLetras4.gif',
-              fit: BoxFit.cover, // Para que ocupe toda la pantalla
+    return WillPopScope(
+        onWillPop: () async {
+      return false;
+    },
+    child: Scaffold(
+        body: Stack(
+          children: [
+            // GIF de fondo de pantalla
+            Positioned.fill(
+              child: Image.asset(
+                'assets/Gifs/VideoLetras4.gif',
+                fit: BoxFit.cover, // Para que ocupe toda la pantalla
+              ),
             ),
-          ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                // CAJA Y TITULO
-                Padding(
-                  padding: EdgeInsets.fromLTRB(screenWidth*0.03, screenHeight*0.05 ,screenWidth*0.03 ,0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      // linea del borde del box
-                      border: Border.all(
-                        width: 8,
-                        color: Colors.black,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            'HANGMAN',
-                            style: GoogleFonts.permanentMarker(fontSize: 40),
-                            /*TextStyle(
-                              fontSize: 40,
-                            ),*/
-
-                          ),
-
-                          //ROW para que sea icono texto icono
-                          Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Image.asset(
-                              'assets/Images/skull.png',
-                              height: 40,
-                              width: 40,
-                              //'assets/Images/image1.png',
-                            ),
-                            /*
-                            Icon(
-                            Icons.cruelty_free,
-                            color: Colors.black,
-                            size: 24.0,
-                            semanticLabel: 'Text to announce in accessibility modes',
-                            ),*/
-                            Text(
-                              'GAME',
-                              style: GoogleFonts.permanentMarker(fontSize: 40),
-                            ),
-                            /*Icon(
-                            Icons.flutter_dash,
-                            color: Colors.black,
-                            size: 36.0,
-                            ),
-                            */
-                            Image.asset(
-                              'assets/Images/skull.png',
-                              height: 40,
-                              width: 40,
-                              //'assets/Images/image1.png',
-                            ),
-
-                            ]
-
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-/*
-                // ESPACIADO
-                const SizedBox(height: 20),
-                // BOTON JUGAR
-                Container(
-                  width: screenWidth * 0.4,
-                  height: screenHeight * 0.1,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Acción para jugar
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const GameSettingsUI()),
-                      );
-                    },
-                    child: const Text('JUGAR'),
-                  ),
-                ),
-                // ESPACIADO
-                const SizedBox(height: 20),
-                // BOTON RANKING
-                Container(
-                  width: screenWidth * 0.4,
-                  height: screenHeight * 0.1,
-
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.9), // Shadow color with opacity
-                        spreadRadius: 1, // Spread value
-                        blurRadius: 0, // Blur value
-                        offset: Offset(5, 7), // Offset (horizontal, vertical)
-                      ),
-                    ],
-                  ),
-
-
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Acción para ranking
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Ranking()),
-                      );
-                    },
-
-                    child: const Text('RANKING'),
-                    style: ElevatedButton.styleFrom(
-                      shadowColor: Colors.blue, //specify the button's elevation color
-                      elevation: 0.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  // CAJA Y TITULO
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(screenWidth*0.03, screenHeight*0.05 ,screenWidth*0.03 ,0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        // linea del borde del box
+                        border: Border.all(
+                          width: 8,
+                          color: Colors.black,
                         ),
-                      side: BorderSide(
-                        width: 5.0,
-                        color: Colors.black,
-                         //buttons Material shadow
+                        borderRadius: BorderRadius.circular(20),
                       ),
+                      child: Center(
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              'HANGMAN',
+                              style: GoogleFonts.permanentMarker(fontSize: 40),
+                              /*TextStyle(
+                                fontSize: 40,
+                              ),*/
 
+                            ),
 
+                            //ROW para que sea icono texto icono
+                            Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Image.asset(
+                                'assets/Images/skull.png',
+                                height: 40,
+                                width: 40,
+                                //'assets/Images/image1.png',
+                              ),
+                              /*
+                              Icon(
+                              Icons.cruelty_free,
+                              color: Colors.black,
+                              size: 24.0,
+                              semanticLabel: 'Text to announce in accessibility modes',
+                              ),*/
+                              Text(
+                                'GAME',
+                                style: GoogleFonts.permanentMarker(fontSize: 40),
+                              ),
+                              /*Icon(
+                              Icons.flutter_dash,
+                              color: Colors.black,
+                              size: 36.0,
+                              ),
+                              */
+                              Image.asset(
+                                'assets/Images/skull.png',
+                                height: 40,
+                                width: 40,
+                                //'assets/Images/image1.png',
+                              ),
+
+                              ]
+
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                // ESPACIADO
-                const SizedBox(height: 20),
-                if (!kIsWeb) // Comprobar si está ejecutando en Chrome, si es así, no muestra el botón
-                // BOTON SALIR
+  /*
+                  // ESPACIADO
+                  const SizedBox(height: 20),
+                  // BOTON JUGAR
                   Container(
                     width: screenWidth * 0.4,
                     height: screenHeight * 0.1,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Acción para salir
-                        if (Platform.isAndroid || Platform.isIOS) {
-                          // si está en Android/iOS, cierra
-                          SystemNavigator.pop(); // Se recomienda usar esto para cerrar la aplicación
-                        } else {
-                          // si está en desktop, pone pestaña en negro
-                          Navigator.pop(context);
-                        }
+                        // Acción para jugar
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const GameSettingsUI()),
+                        );
                       },
-                      child: const Text('SALIR'),
+                      child: const Text('JUGAR'),
                     ),
                   ),
-*/
-                //////////////////////////////////////////////
-                const SizedBox(height: 20),
+                  // ESPACIADO
+                  const SizedBox(height: 20),
+                  // BOTON RANKING
+                  Container(
+                    width: screenWidth * 0.4,
+                    height: screenHeight * 0.1,
 
-                GenericButton(
-                  buttonName: 'JUGAR',
-                  widthFactor: 0.6,
-                  heightFactor: 0.1,
-                  onPressed: () {
-                    PlayAudio("Click.mp3", 0);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const GameSettingsUI()),
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                GenericButton(
-                  buttonName: 'RANKING',
-                  widthFactor: 0.5,
-                  heightFactor: 0.1,
-                  onPressed: () {
-                    PlayAudio("Click.mp3", 0);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Ranking()),
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                if (!kIsWeb)
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.9), // Shadow color with opacity
+                          spreadRadius: 1, // Spread value
+                          blurRadius: 0, // Blur value
+                          offset: Offset(5, 7), // Offset (horizontal, vertical)
+                        ),
+                      ],
+                    ),
+
+
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Acción para ranking
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const Ranking()),
+                        );
+                      },
+
+                      child: const Text('RANKING'),
+                      style: ElevatedButton.styleFrom(
+                        shadowColor: Colors.blue, //specify the button's elevation color
+                        elevation: 0.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)
+                          ),
+                        side: BorderSide(
+                          width: 5.0,
+                          color: Colors.black,
+                           //buttons Material shadow
+                        ),
+
+
+                        ),
+                      ),
+                    ),
+                  ),
+                  // ESPACIADO
+                  const SizedBox(height: 20),
+                  if (!kIsWeb) // Comprobar si está ejecutando en Chrome, si es así, no muestra el botón
+                  // BOTON SALIR
+                    Container(
+                      width: screenWidth * 0.4,
+                      height: screenHeight * 0.1,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Acción para salir
+                          if (Platform.isAndroid || Platform.isIOS) {
+                            // si está en Android/iOS, cierra
+                            SystemNavigator.pop(); // Se recomienda usar esto para cerrar la aplicación
+                          } else {
+                            // si está en desktop, pone pestaña en negro
+                            Navigator.pop(context);
+                          }
+                        },
+                        child: const Text('SALIR'),
+                      ),
+                    ),
+  */
+                  //////////////////////////////////////////////
+                  const SizedBox(height: 20),
+
                   GenericButton(
-                    buttonName: 'SALIR',
-                    widthFactor: 0.5,
+                    buttonName: 'JUGAR',
+                    widthFactor: 0.9,
                     heightFactor: 0.1,
                     onPressed: () {
                       PlayAudio("Click.mp3", 0);
-                      // Acción para salir
-                      if (Platform.isAndroid || Platform.isIOS) {
-                        // si está en Android/iOS, cierra
-                        print('ESTOYENANDROID');
-                        SystemNavigator.pop(); // Se recomienda usar esto para cerrar la aplicación
-                      } else {
-                        // si está en desktop, pone pestaña en negro
-                        print('ESTOYENOTRACOSA');
-                        exit(0);
-                        //Navigator.pop(context);
-                      }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const GameSettingsUI()),
+                      );
                     },
                   ),
-                //////////////////////////////////////////////
-
-                //IMAGEN CALAVERA
-                const SizedBox(height: 10),
-                Container(
-                  child: Image.asset(
-                    'assets/Images/skull.png',
-                    height: screenHeight*0.3,
-                    width: screenWidth*0.3,
-                    //'assets/Images/image1.png',
+                  const SizedBox(height: 20),
+                  GenericButton(
+                    buttonName: 'RANKING',
+                    widthFactor: 0.9,
+                    heightFactor: 0.1,
+                    onPressed: () {
+                      PlayAudio("Click.mp3", 0);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Ranking()),
+                      );
+                    },
                   ),
-                )
+                  const SizedBox(height: 20),
+                  if (!kIsWeb)
+                    GenericButton(
+                      buttonName: 'SALIR',
+                      widthFactor: 0.9,
+                      heightFactor: 0.1,
+                      onPressed: () {
+                        PlayAudio("Click.mp3", 0);
+                        // Acción para salir
+                        if (Platform.isAndroid || Platform.isIOS) {
+                          // si está en Android/iOS, cierra
+                          print('ESTOYENANDROID');
+                          SystemNavigator.pop(); // Se recomienda usar esto para cerrar la aplicación
+                        } else {
+                          // si está en desktop, pone pestaña en negro
+                          print('ESTOYENOTRACOSA');
+                          exit(0);
+                          //Navigator.pop(context);
+                        }
+                      },
+                    ),
+                  //////////////////////////////////////////////
 
-              ],
+                  //IMAGEN CALAVERA
+                  const SizedBox(height: 10),
+                  Container(
+                    child: Image.asset(
+                      'assets/Images/skull.png',
+                      height: screenHeight*0.3,
+                      width: screenWidth*0.3,
+                      //'assets/Images/image1.png',
+                    ),
+                  )
+
+                ],
+              ),
+
             ),
-
-          ),
-        ],
-      ),
+          ],
+        ),
+      )
     );
   }
 }

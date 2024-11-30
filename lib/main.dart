@@ -17,6 +17,7 @@ import 'dart:async';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/services.dart';
 
 typedef ShakeCallback = void Function();
 final DatabaseHelper helper = DatabaseHelper();
@@ -30,7 +31,7 @@ final random = Random();
 //Punto de inicio de nuestra aplicacion
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   try {
     // Carga los datos desde el archivo CSV a la base de datos
     await loadWordsFromCSV();
@@ -218,12 +219,16 @@ class GameState extends ChangeNotifier {
     else if(!currentWord.contains(char)){
       numErrors++;
       totalErrors++;
+      puntuation -= 5;
+      if(puntuation < 0) {
+        puntuation = 0;
+      }
       if(currentStreak > highestStreak){
         highestStreak = currentStreak;
       }
       currentStreak = 0;
       incorrectChars.add(char);
-      PlayAudio("Wrong.mp3", 0);
+      if(char != '_') PlayAudio("Wrong.mp3", 0); //Que no suene si agitas el móvil
       if(random.nextBool()){
         PlayAudio("Grito1.mp3", 1);
       }

@@ -12,19 +12,24 @@ class ResultUI extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<GameState>();
 
-    return Scaffold(
-      body: Center(
-        child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          ResultCard(text: "Palabras adivinadas:", value: appState.currentRound - 1),
-          ResultCard(text: "Número de fallos:", value: appState.totalErrors),
-          ResultCard(text: "Racha de letras acertadas más larga:", value: appState.highestStreak),
-          NavButton(state: appState, route: GameUI(), text: "VOLVER A JUGAR"),
-          NavButton(state: appState, route: MenuPrincipal(), text: "VOLVER AL MENÚ"),
-        ],
-      )
-    )
+    return WillPopScope(
+        onWillPop: () async {
+          return false;
+        },
+        child: Scaffold(
+          body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  ResultCard(text: "Palabras adivinadas:", value: appState.currentRound - 1),
+                  ResultCard(text: "Número de fallos:", value: appState.totalErrors),
+                  ResultCard(text: "Racha de letras acertadas más larga:", value: appState.highestStreak),
+                  NavButton(state: appState, route: GameUI(), text: "VOLVER A JUGAR"),
+                  NavButton(state: appState, route: MenuPrincipal(), text: "VOLVER AL MENÚ"),
+                ],
+              )
+          )
+        )
     );
   }
 }

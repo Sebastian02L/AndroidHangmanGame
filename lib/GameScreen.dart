@@ -26,78 +26,83 @@ class GameUI extends StatelessWidget {
     accelerometerHandler.startListening();
 
 
-    return Scaffold(
-      body: Container( //Lo encerramos todo en un container para poner un padding superior
-        padding: EdgeInsets.only(top: 25),
-        child: Center( //Todos los elementos de la UI estarán centrados en la pantalla
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                //Parte superior de la interfaz, las cards de puntuacion, numero de rondas, tiempo y los textos
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //Textos superiores
-                    Flexible( //Flexible permite que el widget sea responsivo, indicando en flex cuanto tiene que ocupar
-                        flex: 3,
-                        child: TextCard(text: "Ronda"),
-                    ),
-                    Flexible(
-                        flex: 2,
-                        child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))
-                    ),
-                    Flexible(
-                        flex: 6,
-                      child: TextCard(text: "Puntos"),
-                    ),
-                    Flexible(
-                        flex: 2,
-                        child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))),
-                    Flexible(
-                        flex: 3,
-                      child: TextCard(text: "Tiempo"),
-                    )
-                  ],
-                ),
-                // Cards superiores
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible( //Flexible permite que el widget sea responsivo, indicando en flex cuanto tiene que ocupar
-                        flex: 3,
-                        child: WordsCounter(counter: appState.currentRound,totalWords: appState.maxRounds)),
-                    Flexible(
-                        flex: 2,
-                        child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))),
-                    Flexible(
-                        flex: 6,
-                        child: PuntuationCard(puntuation: appState.puntuation)),
-                    Flexible(
-                        flex: 2,
-                        child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))),
-                    Flexible(
-                        flex: 3,
-                        child: TimeCard(time: appState.currentTime, isMarathon: appState.marathonMode,))
-                  ],
-                ),
-                SizedBox(height: 10),
-                //Zona donde aparece el muñeco
-                Flexible(
-                    flex : 2,
-                    child: GamePlaceHolder()
-                ),
-                SizedBox(height: 1),
-                //Caja donde se intenta adivinar la palabra
-                Flexible(
-                    flex : 1,
-                    child: WordBox()
-                ),
-                Flexible(
-                    flex: 1,
-                    child: Keyboard()
-                )
-              ],
-          ),
+    return WillPopScope(
+        onWillPop: () async {
+      return false;
+    },
+    child: Scaffold(
+        body: Container( //Lo encerramos todo en un container para poner un padding superior
+          padding: EdgeInsets.only(top: 25),
+          child: Center( //Todos los elementos de la UI estarán centrados en la pantalla
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  //Parte superior de la interfaz, las cards de puntuacion, numero de rondas, tiempo y los textos
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //Textos superiores
+                      Flexible( //Flexible permite que el widget sea responsivo, indicando en flex cuanto tiene que ocupar
+                          flex: 3,
+                          child: TextCard(text: "Ronda"),
+                      ),
+                      Flexible(
+                          flex: 2,
+                          child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))
+                      ),
+                      Flexible(
+                          flex: 6,
+                        child: TextCard(text: "Puntos"),
+                      ),
+                      Flexible(
+                          flex: 2,
+                          child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))),
+                      Flexible(
+                          flex: 3,
+                        child: TextCard(text: "Tiempo"),
+                      )
+                    ],
+                  ),
+                  // Cards superiores
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible( //Flexible permite que el widget sea responsivo, indicando en flex cuanto tiene que ocupar
+                          flex: 3,
+                          child: WordsCounter(counter: appState.currentRound,totalWords: appState.maxRounds)),
+                      Flexible(
+                          flex: 2,
+                          child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))),
+                      Flexible(
+                          flex: 6,
+                          child: PuntuationCard(puntuation: appState.puntuation)),
+                      Flexible(
+                          flex: 2,
+                          child: SizedBox(child: Padding(padding: EdgeInsets.all(5)))),
+                      Flexible(
+                          flex: 3,
+                          child: TimeCard(time: appState.currentTime, isMarathon: appState.marathonMode,))
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  //Zona donde aparece el muñeco
+                  Flexible(
+                      flex : 2,
+                      child: GamePlaceHolder()
+                  ),
+                  SizedBox(height: 1),
+                  //Caja donde se intenta adivinar la palabra
+                  Flexible(
+                      flex : 1,
+                      child: WordBox()
+                  ),
+                  Flexible(
+                      flex: 1,
+                      child: Keyboard()
+                  )
+                ],
+            ),
+          )
         )
       )
     );
@@ -163,7 +168,7 @@ class TimeCard extends StatelessWidget{
       child: SizedBox( //El child box creara un padding alrededor del texto
         height: 50,
         child: Center(
-          child: (time == 0 && !isMarathon)? Text("∞") : Text("$time"),
+          child: (!isMarathon)? Text("∞") : Text("$time"),
         ),
       ),
     );
