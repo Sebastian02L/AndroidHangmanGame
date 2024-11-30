@@ -69,8 +69,8 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
                 const SizedBox(height: 30),
 
                 Container(
-                  width: screenWidth * 0.4,
-                  height: screenHeight * 0.7,
+                  width: screenWidth * 0.6,
+                  height: screenHeight * 0.6,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     // linea del borde del box
@@ -102,7 +102,7 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
                                 // pair,
                                 'aaaa - 0',
                                   style: GoogleFonts.permanentMarker
-                                    (fontSize: 40,
+                                    (fontSize: 30,
                                     color: Colors.black,
                                   )
                               ),
