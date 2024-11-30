@@ -59,7 +59,12 @@ class _MenuPrincipalState extends State<MenuPrincipal>
                 children: <Widget>[
                   // Título del juego
                   Padding(
-                    padding: EdgeInsets.fromLTRB(screenWidth * 0.03, screenHeight * 0.05, screenWidth * 0.03, 0),
+                    padding: EdgeInsets.fromLTRB(
+                      screenWidth * 0.03,
+                      screenHeight * 0.05,
+                      screenWidth * 0.03,
+                      0,
+                    ),
                     child: _buildTitle(),
                   ),
 
@@ -88,7 +93,10 @@ class _MenuPrincipalState extends State<MenuPrincipal>
           children: <Widget>[
             Text(
               'HANGMAN',
-              style: GoogleFonts.permanentMarker(fontSize: 40),
+              style: GoogleFonts.permanentMarker(
+                fontSize: 40,
+                color: Colors.black, // Texto en negro
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -96,7 +104,10 @@ class _MenuPrincipalState extends State<MenuPrincipal>
                 _buildSkullIcon(),
                 Text(
                   'GAME',
-                  style: GoogleFonts.permanentMarker(fontSize: 40),
+                  style: GoogleFonts.permanentMarker(
+                    fontSize: 40,
+                    color: Colors.black, // Texto en negro
+                  ),
                 ),
                 _buildSkullIcon(),
               ],
@@ -147,7 +158,7 @@ class _MenuPrincipalState extends State<MenuPrincipal>
         ),
         const SizedBox(height: 20),
         // Botón SALIR
-        if (!kIsWeb) // si no es ejecutado en web
+        if (!kIsWeb) // Si no es ejecutado en web
           GenericButton(
             buttonName: 'SALIR',
             widthFactor: 0.9,
@@ -207,10 +218,13 @@ class GenericButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           buttonName,
-          style: GoogleFonts.permanentMarker(fontSize: 30),
+          style: GoogleFonts.permanentMarker(
+            fontSize: 30,
+            color: Colors.black, // Texto en negro
+          ),
         ),
         style: ElevatedButton.styleFrom(
-          shadowColor: Colors.blue,
+          shadowColor: Colors.black,
           elevation: 0.0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
