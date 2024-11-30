@@ -110,7 +110,6 @@ class GameState extends ChangeNotifier {
 
   //Lista de palabras a adivinar
   var words;
-  var username = "";
   //Variable que define los dos modos de juego
   bool marathonMode = false;
 
@@ -137,7 +136,7 @@ class GameState extends ChangeNotifier {
   List<String> incorrectChars = [""];
 
   //Constantes de la partida
-  final MARATHON_MODE_TIME = 120;
+  final MARATHON_MODE_TIME = 180;
   final MARATHON_MODE_MAX_ROUNDS = "∞";
   final NORMAL_MODE_MAX_ROUNDS = "10";
   final MAX_ERRORS = 7;
