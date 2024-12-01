@@ -68,7 +68,8 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
                         children: <Widget>[
                           Text(
                             'RANKING',
-                            style: GoogleFonts.permanentMarker(
+                            style: TextStyle(
+                                fontFamily: 'PermanentMarker',
                                 fontSize: 32), // Tamaño  para la caja
                           ),
                           SizedBox(width: 10),
@@ -108,7 +109,8 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 '3 mejores puntuaciones',
-                                style: GoogleFonts.permanentMarker(
+                                style: TextStyle(
+                                  fontFamily: 'PermanentMarker',
                                   fontSize: 20,
                                   color: Colors.black, // Texto en negro
                                 ),
@@ -138,7 +140,8 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
                                     fit: BoxFit.scaleDown,
                                     child: Text(
                                       getPosition(index),
-                                      style: GoogleFonts.permanentMarker(
+                                      style: TextStyle(
+                                        fontFamily: 'PermanentMarker',
                                         fontSize: 20,
                                         color: Colors.black, // Texto en negro
                                       ),
@@ -191,7 +194,8 @@ class _RankingState extends State<Ranking> with SingleTickerProviderStateMixin {
                 );
               },
               child: Text('<',
-                  style: GoogleFonts.permanentMarker(
+                  style: TextStyle(
+                    fontFamily: 'PermanentMarker',
                     fontSize: 30,
                     color: Colors.black,
                   )),

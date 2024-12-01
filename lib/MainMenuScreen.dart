@@ -94,7 +94,8 @@ class _MenuPrincipalState extends State<MenuPrincipal>
           children: <Widget>[
             Text(
               'HANGMAN',
-              style: GoogleFonts.permanentMarker(
+              style: TextStyle(
+                fontFamily: 'PermanentMarker',
                 fontSize: 40,
                 color: Colors.black, // Texto en negro
               ),
@@ -105,7 +106,8 @@ class _MenuPrincipalState extends State<MenuPrincipal>
                 _buildSkullIcon(),
                 Text(
                   'GAME',
-                  style: GoogleFonts.permanentMarker(
+                  style: TextStyle(
+                    fontFamily: 'PermanentMarker',
                     fontSize: 40,
                     color: Colors.black, // Texto en negro
                   ),
@@ -219,7 +221,8 @@ class GenericButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           buttonName,
-          style: GoogleFonts.permanentMarker(
+          style: TextStyle(
+            fontFamily: 'PermanentMarker',
             fontSize: 30,
             color: Colors.black, // Texto en negro
           ),

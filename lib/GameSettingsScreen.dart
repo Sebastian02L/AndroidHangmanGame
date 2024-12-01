@@ -60,7 +60,8 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                       Navigator.pop(context);
                     },
                     child: Text('<',
-                        style: GoogleFonts.permanentMarker(
+                        style: TextStyle(
+                          fontFamily: 'PermanentMarker',
                           fontSize: 25,
                           color: Colors.black,
                         )),
@@ -95,7 +96,8 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                         child: Text(
                           "Ajustes de la partida",
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.permanentMarker(
+                          style: TextStyle(
+                              fontFamily: 'PermanentMarker',
                               fontSize: 23, color: Colors.black),
                         ),
                       ),
@@ -123,7 +125,8 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                     child: Text(
                       "Nombre del jugador",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.permanentMarker(
+                      style: TextStyle(
+                        fontFamily: 'PermanentMarker',
                         fontSize: 22,
                         color: Colors.black,
                       ),
@@ -150,7 +153,8 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                           borderSide: BorderSide(color: Colors.black, width: 2.0), // Borde negro cuando está habilitado
                         ),
                       ),
-                      style: GoogleFonts.permanentMarker(
+                      style: TextStyle(
+                        fontFamily: 'PermanentMarker',
                         fontSize: 20,
                         color: Colors.black,
                       ),
@@ -181,7 +185,8 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                     child: Text(
                       "Categoría de las palabras",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.permanentMarker(
+                      style: TextStyle(
+                        fontFamily: 'PermanentMarker',
                         fontSize: 20,
                         color: Colors.black,
                       ),
@@ -205,15 +210,15 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                       value: selectedCategory,
                       hint: Text(
                         "Seleccione una categoría...",
-                        style: GoogleFonts.permanentMarker(fontSize: 15),
+                        style: TextStyle(fontFamily: 'PermanentMarker'),
                       ),
                       items: options.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(
                             value,
-                            style: GoogleFonts.permanentMarker(fontSize: 20),
-                          ),
+                            style:TextStyle(fontFamily: 'PermanentMarker'),
+                          )
                         );
                       }).toList(),
                       onChanged: selectedMode != "Marathon" ? (String? newValue) {
@@ -247,7 +252,8 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                     child: Text(
                       "Modo de juego",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.permanentMarker(
+                      style: TextStyle(
+                        fontFamily: 'PermanentMarker',
                         fontSize: 22,
                         color: Colors.black, // Texto negro
                       ),
@@ -326,7 +332,8 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "¡Comenzar Partida!",
-                        style: GoogleFonts.permanentMarker(
+                        style: TextStyle(
+                          fontFamily: 'PermanentMarker',
                           fontSize: 24,
                           color: Colors.black, // Texto en negro
                         ),
@@ -367,7 +374,8 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
                 child: Text(
                   text,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.permanentMarker(
+                  style: TextStyle(
+                      fontFamily: 'PermanentMarker',
                       fontSize: 22, color: Colors.black),
                 ),
               ),
@@ -391,7 +399,8 @@ class _GameSettingsUIState extends State<GameSettingsUI> {
         padding: const EdgeInsets.all(8.0),
         child: Text(
           text,
-          style: GoogleFonts.permanentMarker(
+          style: TextStyle(
+              fontFamily: 'PermanentMarker',
               fontSize: 20, color: Colors.black),
         ),
       ),

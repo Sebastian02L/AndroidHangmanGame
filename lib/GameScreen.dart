@@ -21,8 +21,7 @@ class GameUI extends StatelessWidget {
           if (appState.canShake) {
             appState.canShake = false;
             appState.IsCharacterCorrect('_');
-            appState.warningText =
-                "¡CUIDADO! Si agitas demasiado el móvil maltratarás a Miguel.";
+            appState.warningText = "¡CUIDADO! Si agitas demasiado el móvil maltratarás a Miguel.";
             Timer(Duration(milliseconds: 3000), () {
               appState.canShake = true;
               appState.warningText = "";
@@ -139,7 +138,8 @@ class TextCard extends StatelessWidget {
         child: Center(
           child: Text(
             "$text",
-            style: GoogleFonts.permanentMarker(
+            style: TextStyle(
+              fontFamily: 'PermanentMarker',
               color: Colors.black, // Color de texto negro
             ),
           ),
@@ -170,7 +170,8 @@ class PuntuationCard extends StatelessWidget {
         child: Center(
           child: Text(
             "$puntuation",
-            style: GoogleFonts.permanentMarker(
+            style: TextStyle(
+              fontFamily: 'PermanentMarker',
               color: Colors.black, // Color de texto negro
             ),
           ),
@@ -203,14 +204,16 @@ class TimeCard extends StatelessWidget {
           child: (!isMarathon)
               ? Text(
             "∞",
-            style: GoogleFonts.permanentMarker(
+            style: TextStyle(
+              fontFamily: 'PermanentMarker',
               color: Colors.black,
               fontSize: 35,// Color de texto negro
             ),
           )
               : Text(
             "$time",
-            style: GoogleFonts.permanentMarker(
+            style: TextStyle(
+              fontFamily: 'PermanentMarker',
               color: Colors.black, // Color de texto negro
             ),
           ),
@@ -242,7 +245,8 @@ class WordsCounter extends StatelessWidget {
         child: Center(
           child: Text(
             "$counter/$totalWords",
-            style: GoogleFonts.permanentMarker(
+            style: TextStyle(
+              fontFamily: 'PermanentMarker',
               color: Colors.black, // Color de texto negro
             ),
           ),
@@ -276,6 +280,7 @@ class GamePlaceHolder extends StatelessWidget {
               child: Text(
             appState.warningText,
             style: TextStyle(
+              fontFamily: 'PermanentMarker',
               color: Colors.red, // Cambia el color del texto a rojo
               fontSize: 16, // Ajusta el tamaño de la fuente si es necesario
             ),
@@ -356,7 +361,8 @@ class KeyboardButton extends StatelessWidget {
           child: Center(
             child: Text(
               letter,
-              style: GoogleFonts.permanentMarker(
+              style: TextStyle(
+                fontFamily: 'PermanentMarker',
                 color: Colors.black, // Color del texto de la tecla
                 fontSize: 18, // Tamaño de la fuente
               ),

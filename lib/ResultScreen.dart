@@ -81,14 +81,16 @@ class ResultCard extends StatelessWidget {
           children: [
             Text(
               "$text",
-              style: GoogleFonts.permanentMarker(
+              style: TextStyle(
+                fontFamily: 'PermanentMarker',
                 fontSize: 20,
                 color: Colors.black,
               ),
             ),
             Text(
               "$value",
-              style: GoogleFonts.permanentMarker(
+              style: TextStyle(
+                fontFamily: 'PermanentMarker',
                 fontSize: 35,
                 color: Colors.black,
               ),
